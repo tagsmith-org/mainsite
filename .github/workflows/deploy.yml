@@ -27,6 +27,12 @@ jobs:
       - name: List dist contents
         run: ls -l dist        
 
+      - name: Print working directory and find dist
+        run: |
+          pwd
+          find . -type d -name dist
+          ls -l ./dist || true        
+
       - name: Deploy via rsync over SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
