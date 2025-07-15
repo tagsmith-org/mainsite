@@ -6,7 +6,7 @@
                 <!-- Логотип и заголовок -->
                 <div class="flex items-center min-w-0">
                     <img src="/public/2zppeLRyFcf9xxxQmcoxYzwrhWw.svg" class="h-10 w-auto flex-shrink-0" />
-                    <h1 class="text-xl sm:text-xl text-base font-bold tracking-wide ml-2 truncate">
+                    <h1 class="text-xl font-bold tracking-wide ml-2 truncate">
                         TagSmith
                     </h1>
                 </div>
