@@ -22,6 +22,11 @@ jobs:
       - name: List dist contents (debug)
         run: ls -l dist
 
+      - name: Save SSH key
+        run: |
+          echo "${{ secrets.SSH_KEY }}" > /tmp/deploy_key
+          chmod 600 /tmp/deploy_key
+
       - name: Deploy via rsync
         run: |
-          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }}" ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mainsite/  
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i /tmp/deploy_key" ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mainsite/
