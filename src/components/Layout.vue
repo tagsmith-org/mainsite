@@ -11,7 +11,7 @@
                     </h1>
                 </div>
 
-                <!-- Desktop меню -->
+                <!-- Desktop меню   fff -->
                 <ul class="hidden md:flex space-x-6 text-sm uppercase">
                     <li>
                         <RouterLink to="/" class="hover:text-amber-400">Home</RouterLink>
