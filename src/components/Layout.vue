@@ -5,7 +5,7 @@
             <nav class="max-w-4xl mx-auto flex justify-between items-center relative">
                 <!-- Логотип и заголовок -->
                 <div class="flex items-center min-w-0">
-                    <img src="/public/2zppeLRyFcf9xxxQmcoxYzwrhWw.svg" class="h-10 w-auto flex-shrink-0" />
+                    <img src="../../src/assets/logos/image.png" class="h-10 w-auto flex-shrink-0" />
                     <h1 class="text-xl font-bold tracking-wide ml-2 truncate">
                         TagSmith
                     </h1>

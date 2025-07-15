@@ -3,7 +3,7 @@
         <!-- 1. Главный заголовок + оффер -->
         <header class="relative py-16 border-b border-neutral-800 overflow-hidden">
             <div class="absolute inset-0 w-full h-full">
-                <img src="/public/image 2.png" alt="Hero background"
+                <img src="../../src/assets/site-images/hero.png" alt="Hero background"
                     class="w-full h-full object-cover object-center opacity-100" loading="lazy" />
                 <div class="absolute inset-0 bg-neutral-900/10"></div>
             </div>
