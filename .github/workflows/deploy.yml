@@ -34,4 +34,5 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            cd $GITHUB_WORKSPACE
             rsync -avz --delete ./dist/ /var/www/mainsite/
