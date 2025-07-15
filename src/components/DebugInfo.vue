@@ -23,7 +23,7 @@ const updateWidth = () => {
         mainWidth.value = mainElement.offsetWidth
     }
 }
-// ddfg 777777
+// ddfg 777777 66666
 const updatePage = () => {
     currentPage.value = route.name as string || route.path.slice(1) || 'home'
 }

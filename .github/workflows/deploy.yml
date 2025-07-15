@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Deploy to VPS via rsync
 
 on:
   push:
@@ -24,21 +24,11 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Copy files to VPS via SSH
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "dist/*"
-          target: "/var/www/mainsite"        
-
-      - name: (Optional) Post-deploy command
+      - name: Deploy via rsync over SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /var/www/mainsite
-            # pm2 restart, reload nginx, etc. если нужно
+            rsync -avz --delete ./dist/ /var/www/mainsite/
