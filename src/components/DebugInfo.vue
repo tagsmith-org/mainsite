@@ -23,7 +23,7 @@ const updateWidth = () => {
         mainWidth.value = mainElement.offsetWidth
     }
 }
-
+// ddfg
 const updatePage = () => {
     currentPage.value = route.name as string || route.path.slice(1) || 'home'
 }
