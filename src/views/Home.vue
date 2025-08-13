@@ -10,7 +10,7 @@
             </div>
             <div class="relative max-w-5xl mx-auto px-6 text-center flex flex-col items-center z-10">
                 <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4 text-white drop-shadow-lg">
-                    Modern websites built right, fast, honest, and clean 123123123
+                    Modern websites built right, fast, honest, and clean
                 </h1>
                 <p class="text-lg text-neutral-200 max-w-2xl mx-auto mb-6 drop-shadow">
                     I craft microsites, landing pages, and promo sites using Vue 3 / Nuxt — no templates, no CMS. Just
@@ -259,6 +259,6 @@
 }
 
 .hero-image-enhanced {
-    filter: brightness(1.25) contrast(1.08) saturate(1.05);
+    filter: brightness(1.55) contrast(1.0) saturate(1.85);
 }
 </style>
