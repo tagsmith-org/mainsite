@@ -29,5 +29,4 @@ jobs:
 
       - name: Deploy via rsync
         run: |
-          
-        rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i /tmp/deploy_key" ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mainsite/
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i /tmp/deploy_key" ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mainsite/
