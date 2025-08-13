@@ -44,14 +44,16 @@ jobs:
           source: "dist/"
           target: "/var/www/mainsite/"
 
-      - name: Deploy to server
+      - name: Move files to correct location
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            ls -la /var/www/mainsite/
+            cd /var/www/mainsite/
+            mv dist/* .
+            rmdir dist
             chown -R www-data:www-data /var/www/mainsite/
             chmod -R 755 /var/www/mainsite/
             systemctl reload nginx
