@@ -19,16 +19,20 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: List dist contents (debug)
-        run: ls -l dist
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            rsync -avz --delete /tmp/dist/ /var/www/mainsite/
 
-      - name: Save SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" | tr ' ' '\n' > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
-
-      - name: Deploy via rsync
-        run: |
-          rsync -avz --delete ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mainsite/
+      - name: Upload dist files
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "dist/*"
+          target: "/var/www/mainsite/"
