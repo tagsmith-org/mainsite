@@ -3,9 +3,10 @@
         <!-- 1. Главный заголовок + оффер -->
         <header class="relative py-16 border-b border-neutral-800 overflow-hidden">
             <div class="absolute inset-0 w-full h-full">
-                <img src="../../src/assets/site-images/hero.png" alt="Hero background"
-                    class="w-full h-full object-cover object-center opacity-100" loading="lazy" />
-                <div class="absolute inset-0 bg-neutral-900/10"></div>
+                <img src="../../src/assets/site-images/image2.png" alt="Hero background"
+                    class="w-full h-full object-cover object-center opacity-100 hero-image-enhanced" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-b from-neutral-900/20 via-neutral-900/10 to-neutral-900/30">
+                </div>
             </div>
             <div class="relative max-w-5xl mx-auto px-6 text-center flex flex-col items-center z-10">
                 <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4 text-white drop-shadow-lg">
@@ -248,3 +249,16 @@
 // Все секции реализованы декларативно, без классов, с использованием Composition API
 // Для анимаций и динамики можно добавить Headless UI или VueUse по необходимости
 </script>
+<style scoped>
+.hero-image-brightened {
+    filter: brightness(1.3) contrast(1.1) saturate(1.1);
+}
+
+.hero-image-soft-brightened {
+    filter: brightness(1.2) contrast(1.05);
+}
+
+.hero-image-enhanced {
+    filter: brightness(1.25) contrast(1.08) saturate(1.05);
+}
+</style>

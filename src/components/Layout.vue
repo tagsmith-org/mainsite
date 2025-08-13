@@ -1,5 +1,7 @@
 <template>
     <div class="min-h-screen bg-neutral-900 text-white font-sans">
+        <PromoBanner />
+
         <!-- Header -->
         <header class="px-6 py-4 shadow-md bg-neutral-800">
             <nav class="max-w-4xl mx-auto flex justify-between items-center relative">
@@ -9,6 +11,9 @@
                     <h1 class="text-xl font-bold tracking-wide ml-2 truncate">
                         TagSmith
                     </h1>
+                    <div v-if="isAdmin" class="ml-2 px-2 py-1 bg-green-600 text-white text-xs rounded">
+                        ADMIN
+                    </div>
                 </div>
 
                 <!-- Desktop меню 11111 -->
@@ -24,6 +29,9 @@
                     </li>
                     <li>
                         <RouterLink to="/contact" class="hover:text-amber-400">Contact</RouterLink>
+                    </li>
+                    <li v-if="isAdmin">
+                        <RouterLink to="/orders" class="hover:text-amber-400">Orders</RouterLink>
                     </li>
                 </ul>
 
@@ -54,6 +62,10 @@
                             <RouterLink to="/contact" class="hover:text-amber-400" @click="isOpen = false">Contact
                             </RouterLink>
                         </li>
+                        <li v-if="isAdmin">
+                            <RouterLink to="/orders" class="hover:text-amber-400" @click="isOpen = false">Orders
+                            </RouterLink>
+                        </li>
                     </ul>
                 </transition>
             </nav>
@@ -68,10 +80,24 @@
         <footer class="text-center text-xs text-neutral-400 py-4 border-t border-neutral-700">
             © 2025 TagSmith. Crafted with Vue & Tailwind.
         </footer>
+
+        <!-- Promo Manager (only in development) -->
+        <PromoManager />
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import PromoBanner from './PromoBanner.vue'
+import PromoManager from './PromoManager.vue'
+import { getAdminStatus } from '../utils/adminAuth.js'
+
 const isOpen = ref(false)
+const isAdmin = ref(false)
+
+onMounted(async () => {
+    console.log('🔍 Checking admin status...')
+    isAdmin.value = await getAdminStatus()
+    console.log('👤 Admin status:', isAdmin.value)
+})
 </script>

@@ -1,22 +1,32 @@
 {
   "name": "mainsite",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node server-sqlite.cjs",
+    "server:dev": "nodemon server-sqlite.cjs"
   },
   "dependencies": {
-    "vue": "^3.5.17",
-    "vue-router": "^4.5.1"
+    "@headlessui/vue": "^1.7.16",
+    "@vueuse/core": "^10.7.0",
+    "better-sqlite3": "^9.6.0",
+    "cors": "^2.8.5",
+    "element-plus": "^2.4.4",
+    "express": "^4.21.2",
+    "nodemailer": "^6.10.1",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.0",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.17",
-    "vite": "^7.0.4"
+    "@vitejs/plugin-vue": "^4.5.2",
+    "autoprefixer": "^10.4.16",
+    "nodemon": "^3.0.2",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6",
+    "vite": "^5.0.8"
   }
 }
