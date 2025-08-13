@@ -19,15 +19,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Deploy to server
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            rsync -avz --delete /tmp/dist/ /var/www/mainsite/
-
       - name: Upload dist files
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -36,3 +27,14 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: "dist/*"
           target: "/var/www/mainsite/"
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            chown -R www-data:www-data /var/www/mainsite/
+            chmod -R 755 /var/www/mainsite/
+            systemctl reload nginx
