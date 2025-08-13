@@ -20,7 +20,20 @@ jobs:
         run: npm run build
 
       - name: List dist contents (debug)
-        run: ls -la dist/
+        run: |
+          echo "=== Dist contents ==="
+          ls -la dist/
+          echo "=== Index.html content ==="
+          head -10 dist/index.html
+
+      - name: Clean server directory
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            rm -rf /var/www/mainsite/*
 
       - name: Upload dist files
         uses: appleboy/scp-action@v0.1.7
