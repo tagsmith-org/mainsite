@@ -9,3 +9,4 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
 # Trigger deployment
 # Force update
 # Update SSH key
+# Force workflow update
