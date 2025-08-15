@@ -12,7 +12,7 @@ sudo cp /etc/nginx/sites-available/mainsite /etc/nginx/sites-available/mainsite.
 sudo tee /etc/nginx/sites-available/mainsite > /dev/null << 'EOF'
 server {
     listen 80;
-    server_name websmith-shop.com www.websmith-shop.com;
+    server_name 178.156.135.213;
 
     # Frontend (Vue.js build)
     location / {
@@ -64,7 +64,7 @@ if [ $? -eq 0 ]; then
     sudo systemctl status nginx --no-pager -l
     
     echo "🎉 Configuration updated successfully!"
-    echo "🌐 Test your site: https://websmith-shop.com/services"
+    echo "🌐 Test your site: http://178.156.135.213/services"
 else
     echo "❌ Nginx configuration test failed"
     echo "📋 Check the configuration and try again"
