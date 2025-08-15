@@ -128,7 +128,7 @@ server {
 
     # Frontend (Vue.js build)
     location / {
-        root /var/www/mainsite/dist;
+        root /var/www/mainsite;
         try_files $uri $uri/ /index.html;
         
         # Cache static assets
