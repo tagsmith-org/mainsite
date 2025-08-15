@@ -259,6 +259,6 @@
 }
 
 .hero-image-enhanced {
-    filter: brightness(1.55) contrast(1.0) saturate(1.85);
+    filter: brightness(1.95) contrast(1.1) saturate(5.85);
 }
 </style>
