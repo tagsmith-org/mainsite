@@ -64,6 +64,7 @@ jobs:
 
       - name: Reload nginx
         run: |
-          echo "🔄 Reloading nginx..."
-          sudo systemctl reload nginx
+          echo "🔄 Restarting nginx..."
+          sudo systemctl restart nginx
+          sudo systemctl status nginx --no-pager -l
           echo "🎉 Deployment completed successfully!"
