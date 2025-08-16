@@ -35,14 +35,14 @@ jobs:
           script: |
             rm -rf /var/www/mainsite/*
 
-      - name: Upload dist files to temp directory
+      - name: Upload dist files directly to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           source: "dist/"
-          target: "/tmp/mainsite-temp/"
+          target: "/var/www/mainsite/"
 
       - name: Move files to correct location and fix nginx
         uses: appleboy/ssh-action@v1.0.3
@@ -51,11 +51,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            echo "🔧 Moving files to correct location..."
-            
-            # Move files from temp to main directory
-            mv /tmp/mainsite-temp/* /var/www/mainsite/
-            rmdir /tmp/mainsite-temp
+            echo "🔧 Files uploaded directly to correct location"
             
             # Set correct permissions
             chown -R www-data:www-data /var/www/mainsite/
