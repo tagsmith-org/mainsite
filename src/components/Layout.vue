@@ -11,12 +11,9 @@
                     <h1 class="text-xl font-bold tracking-wide ml-2 truncate">
                         TagSmith
                     </h1>
-                    <div v-if="isAdmin" class="ml-2 px-2 py-1 bg-green-600 text-white text-xs rounded">
-                        ADMIN
-                    </div>
                 </div>
 
-                <!-- Desktop меню 11111 -->
+                <!-- Desktop меню -->
                 <ul class="hidden md:flex space-x-6 text-sm uppercase">
                     <li>
                         <RouterLink to="/" class="hover:text-amber-400">Home</RouterLink>
@@ -29,9 +26,6 @@
                     </li>
                     <li>
                         <RouterLink to="/contact" class="hover:text-amber-400">Contact</RouterLink>
-                    </li>
-                    <li v-if="isAdmin">
-                        <RouterLink to="/orders" class="hover:text-amber-400">Orders</RouterLink>
                     </li>
                 </ul>
 
@@ -62,10 +56,6 @@
                             <RouterLink to="/contact" class="hover:text-amber-400" @click="isOpen = false">Contact
                             </RouterLink>
                         </li>
-                        <li v-if="isAdmin">
-                            <RouterLink to="/orders" class="hover:text-amber-400" @click="isOpen = false">Orders
-                            </RouterLink>
-                        </li>
                     </ul>
                 </transition>
             </nav>
@@ -87,17 +77,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref } from 'vue'
 import PromoBanner from './PromoBanner.vue'
 import PromoManager from './PromoManager.vue'
-import { getAdminStatus } from '../utils/adminAuth.js'
 
 const isOpen = ref(false)
-const isAdmin = ref(false)
-
-onMounted(async () => {
-    console.log('🔍 Checking admin status...')
-    isAdmin.value = await getAdminStatus()
-    console.log('👤 Admin status:', isAdmin.value)
-})
 </script>

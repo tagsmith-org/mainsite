@@ -44,25 +44,7 @@ jobs:
           source: "dist/*"
           target: "/var/www/mainsite/"
 
-      - name: Upload server files
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "server-sqlite.cjs"
-          target: "/var/www/mainsite/"
-
-      - name: Upload server environment
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "server.env"
-          target: "/var/www/mainsite/"
-
-      - name: Move files to correct location and setup server
+      - name: Move files to correct location and setup
         uses: appleboy/ssh-action@v1.0.3    
         with: 
           host: ${{ secrets.SSH_HOST }}
@@ -70,7 +52,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "🔧 Moving files to correct location..."
-            # Move files from dist subfolder to root directory
             cd /var/www/mainsite
             mv dist/* .
             rmdir dist
@@ -79,46 +60,7 @@ jobs:
             # Set correct permissions
             chown -R www-data:www-data /var/www/mainsite/
             chmod -R 755 /var/www/mainsite/
-
-            # Create .env file
-            echo "${{ secrets.ENV_CONTENT }}" > /var/www/mainsite/.env
-            chown www-data:www-data /var/www/mainsite/.env
-            chmod 644 /var/www/mainsite/.env
-            echo "✅ .env file created successfully"
-
-            # Update system and install Node.js
-            echo "🔧 Updating system and installing Node.js..."
-            apt update
-            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-
-            # Verify installation #
-            node --version
-            npm --version
-
-            # Install server dependencies
-            echo "🔧 Installing server dependencies..."
-            npm install better-sqlite3 express cors nodemailer
-
-            # Stop existing server if running
-            pkill -f "node server-sqlite.cjs" || true
-
-            # Start server
-            echo "🚀 Starting server..."
-            nohup node server-sqlite.cjs > server.log 2>&1 &
-
-            # Wait a moment for server to start
-            sleep 3
-
-            # Check if server is running
-            if pgrep -f "node server-sqlite.cjs" > /dev/null; then
-                echo "✅ Server started successfully"
-            else
-                echo "❌ Server failed to start"
-                cat server.log
-                exit 1
-            fi
-
+            
             # Restart nginx
             echo "🔄 Restarting nginx..."
             sudo systemctl restart nginx
