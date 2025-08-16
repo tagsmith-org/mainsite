@@ -51,7 +51,12 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            echo "🔧 Files uploaded directly to correct location"
+            echo "🔧 Moving files to correct location..."
+            # Move files from dist subfolder to root directory
+            cd /var/www/mainsite
+            mv dist/* .
+            rmdir dist
+            echo "🔧 Files moved successfully"
             
             # Set correct permissions
             chown -R www-data:www-data /var/www/mainsite/
