@@ -1,11 +1,13 @@
 <template>
     <div class="orders-page">
         <div v-if="!isAdmin" class="container mx-auto px-4 py-8 text-center">
+            <!--
             <div class="bg-red-900 border border-red-700 rounded-lg p-8">
                 <h1 class="text-2xl font-bold text-red-400 mb-4">🚫 Доступ запрещен</h1>
                 <p class="text-red-300">Эта страница доступна только администраторам.</p>
                 <p class="text-red-300 mt-2">Ваш IP: {{ clientIP }}</p>
             </div>
+            -->
         </div>
 
         <div v-else class="container mx-auto px-4 py-8">
