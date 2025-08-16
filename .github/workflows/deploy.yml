@@ -62,6 +62,18 @@ jobs:
             chown -R www-data:www-data /var/www/mainsite/
             chmod -R 755 /var/www/mainsite/
 
+            - name: Create .env file on server
+            uses: appleboy/ssh-action@v1.0.3
+            with:
+              host: ${{ secrets.SSH_HOST }}
+              username: ${{ secrets.SSH_USER }}
+              key: ${{ secrets.SSH_KEY }}
+              script: |
+                echo "${{ secrets.ENV_CONTENT }}" > /var/www/mainsite/.env
+                chown www-data:www-data /var/www/mainsite/.env
+                chmod 644 /var/www/mainsite/.env
+                echo "✅ .env file created successfully"            
+
       - name: Reload nginx
         run: |
           echo "🔄 Restarting nginx..."
