@@ -35,64 +35,64 @@ jobs:
           script: |
             rm -rf /var/www/mainsite/*
 
-      - name: Upload dist files
+      - name: Upload dist files to temp directory
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           source: "dist/"
-          target: "/var/www/mainsite/"
+          target: "/tmp/mainsite-temp/"
 
-      - name: Fix nginx configuration for SPA routing
+      - name: Move files to correct location and fix nginx
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            echo "🔧 Moving files to correct location..."
+            
+            # Move files from temp to main directory
+            mv /tmp/mainsite-temp/* /var/www/mainsite/
+            rmdir /tmp/mainsite-temp
+            
+            # Set correct permissions
+            chown -R www-data:www-data /var/www/mainsite/
+            chmod -R 755 /var/www/mainsite/
+            
             echo "🔧 Fixing nginx configuration for SPA routing..."
             
             # Backup current config
-            sudo cp /etc/nginx/sites-available/mainsite /etc/nginx/sites-available/mainsite.backup.$(date +%Y%m%d_%H%M%S)
+            sudo cp /etc/nginx/sites-available/websmith-shop.com.conf /etc/nginx/sites-available/websmith-shop.com.conf.backup.$(date +%Y%m%d_%H%M%S)
             
             # Create correct nginx configuration
-            sudo tee /etc/nginx/sites-available/mainsite > /dev/null << 'EOF'
+            sudo tee /etc/nginx/sites-available/websmith-shop.com.conf > /dev/null << 'EOF'
+            server {
+                root /var/www/mainsite;
+                index index.html index.htm;
+
+                server_name websmith-shop.com www.websmith-shop.com;
+
+                location / {
+                    try_files $uri $uri/ /index.html;
+                }
+
+                listen [::]:443 ssl ipv6only=on; # managed by Certbot
+                listen 443 ssl; # managed by Certbot
+                ssl_certificate /etc/letsencrypt/live/www.websmith-shop.com/fullchain.pem;
+                ssl_certificate_key /etc/letsencrypt/live/www.websmith-shop.com/privkey.pem;
+                include /etc/letsencrypt/options-ssl-nginx.conf;
+                ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+            }
+
             server {
                 listen 80;
-                server_name 178.156.135.213;
-            
-                # Frontend (Vue.js build)
-                location / {
-                    root /var/www/mainsite;
-                    try_files $uri $uri/ /index.html;
-                    
-                    # Cache static assets
-                    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
-                        expires 1y;
-                        add_header Cache-Control "public, immutable";
-                    }
-                }
-            
-                # API Backend
-                location /api/ {
-                    proxy_pass http://localhost:3001;
-                    proxy_http_version 1.1;
-                    proxy_set_header Upgrade $http_upgrade;
-                    proxy_set_header Connection 'upgrade';
-                    proxy_set_header Host $host;
-                    proxy_set_header X-Real-IP $remote_addr;
-                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                    proxy_set_header X-Forwarded-Proto $scheme;
-                    proxy_cache_bypass $http_upgrade;
-                }
-            
-                # Security headers
-                add_header X-Frame-Options "SAMEORIGIN" always;
-                add_header X-XSS-Protection "1; mode=block" always;
-                add_header X-Content-Type-Options "nosniff" always;
-                add_header Referrer-Policy "no-referrer-when-downgrade" always;
-                add_header Content-Security-Policy "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;
+                listen [::]:80;
+
+                server_name websmith-shop.com www.websmith-shop.com;
+
+                return 301 https://www.websmith-shop.com$request_uri;
             }
             EOF
             
@@ -112,14 +112,3 @@ jobs:
                 echo "❌ Nginx configuration test failed"
                 exit 1
             fi
-
-      - name: Set permissions and reload nginx
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            chown -R www-data:www-data /var/www/mainsite/
-            chmod -R 755 /var/www/mainsite/
-            systemctl reload nginx
