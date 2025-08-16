@@ -86,6 +86,16 @@ jobs:
             chmod 644 /var/www/mainsite/.env
             echo "✅ .env file created successfully"
 
+            # Update system and install Node.js
+            echo "🔧 Updating system and installing Node.js..."
+            apt update
+            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+            # Verify installation
+            node --version
+            npm --version
+
             # Install server dependencies
             echo "🔧 Installing server dependencies..."
             npm install sqlite3 express cors nodemailer
