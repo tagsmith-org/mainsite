@@ -98,7 +98,7 @@ jobs:
 
             # Install server dependencies
             echo "🔧 Installing server dependencies..."
-            npm install sqlite3 express cors nodemailer
+            npm install better-sqlite3 express cors nodemailer
 
             # Stop existing server if running
             pkill -f "node server-sqlite.cjs" || true
