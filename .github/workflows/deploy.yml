@@ -61,55 +61,9 @@ jobs:
             # Set correct permissions
             chown -R www-data:www-data /var/www/mainsite/
             chmod -R 755 /var/www/mainsite/
-            
-            echo "🔧 Fixing nginx configuration for SPA routing..."
-            
-            # Backup current config
-            sudo cp /etc/nginx/sites-available/websmith-shop.com.conf /etc/nginx/sites-available/websmith-shop.com.conf.backup.$(date +%Y%m%d_%H%M%S)
-            
-            # Create correct nginx configuration
-            sudo tee /etc/nginx/sites-available/websmith-shop.com.conf > /dev/null << 'EOF'
-            server {
-                root /var/www/mainsite;
-                index index.html index.htm;
 
-                server_name websmith-shop.com www.websmith-shop.com;
-
-                location / {
-                    try_files $uri $uri/ /index.html;
-                }
-
-                listen [::]:443 ssl ipv6only=on; # managed by Certbot
-                listen 443 ssl; # managed by Certbot
-                ssl_certificate /etc/letsencrypt/live/www.websmith-shop.com/fullchain.pem;
-                ssl_certificate_key /etc/letsencrypt/live/www.websmith-shop.com/privkey.pem;
-                include /etc/letsencrypt/options-ssl-nginx.conf;
-                ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
-            }
-
-            server {
-                listen 80;
-                listen [::]:80;
-
-                server_name websmith-shop.com www.websmith-shop.com;
-
-                return 301 https://www.websmith-shop.com$request_uri;
-            }
-            EOF
-            
-            # Test nginx configuration
-            echo "🧪 Testing nginx configuration..."
-            sudo nginx -t
-            
-            if [ $? -eq 0 ]; then
-                echo "✅ Nginx configuration is valid"
-                
-                # Reload nginx
-                echo "🔄 Reloading nginx..."
-                sudo systemctl reload nginx
-                
-                echo "🎉 Configuration updated successfully!"
-            else
-                echo "❌ Nginx configuration test failed"
-                exit 1
-            fi
+      - name: Reload nginx
+        run: |
+          echo "🔄 Reloading nginx..."
+          sudo systemctl reload nginx
+          echo "🎉 Deployment completed successfully!"
