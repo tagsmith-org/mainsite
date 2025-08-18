@@ -92,8 +92,9 @@
                         <td class="px-4 py-3 text-sm text-neutral-400">Product launches, promotions, events, quick
                             online presence</td>
                         <td class="px-4 py-3 text-sm text-neutral-300">$200–500</td>
-                        <td class="px-4 py-3 text-sm"><a href="/demo/landing-page"
-                                class="text-amber-400 hover:underline">view</a></td>
+                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo6.websmith-shop.com')"
+                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
+                        </td>
                     </tr>
                     <tr>
                         <td class="px-4 py-3 text-sm font-medium text-white">Corporate Services Website</td>
@@ -101,8 +102,9 @@
                             contacts, reviews. More informative than landing.</td>
                         <td class="px-4 py-3 text-sm text-neutral-400">Service companies, small businesses, brands</td>
                         <td class="px-4 py-3 text-sm text-neutral-300">$600–1200</td>
-                        <td class="px-4 py-3 text-sm"><a href="/demo/corporate-services-website"
-                                class="text-amber-400 hover:underline">view</a></td>
+                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo2.websmith-shop.com')"
+                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
+                        </td>
                     </tr>
                     <tr>
                         <td class="px-4 py-3 text-sm font-medium text-white">Portfolio / Personal Page</td>
@@ -111,8 +113,9 @@
                         <td class="px-4 py-3 text-sm text-neutral-400">Designers, photographers, architects, freelancers
                         </td>
                         <td class="px-4 py-3 text-sm text-neutral-300">$300–700</td>
-                        <td class="px-4 py-3 text-sm"><a href="/demo/portfolio-personal-page"
-                                class="text-amber-400 hover:underline">view</a></td>
+                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo5.websmith-shop.com')"
+                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
+                        </td>
                     </tr>
                     <tr>
                         <td class="px-4 py-3 text-sm font-medium text-white">E-commerce Storefront</td>
@@ -121,8 +124,9 @@
                         <td class="px-4 py-3 text-sm text-neutral-400">Stores with small to medium product range, basic
                             e-commerce</td>
                         <td class="px-4 py-3 text-sm text-neutral-300">$1000–2500</td>
-                        <td class="px-4 py-3 text-sm"><a href="/demo/ecommerce-storefront"
-                                class="text-amber-400 hover:underline">view</a></td>
+                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo3.websmith-shop.com')"
+                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
+                        </td>
                     </tr>
                     <tr>
                         <td class="px-4 py-3 text-sm font-medium text-white">Blog / Content Site</td>
@@ -132,8 +136,9 @@
                         <td class="px-4 py-3 text-sm text-neutral-400">Writers, journalists, content creators, news
                             agencies, media companies</td>
                         <td class="px-4 py-3 text-sm text-neutral-300">$1000–2500</td>
-                        <td class="px-4 py-3 text-sm"><a href="/demo/blog-content-site"
-                                class="text-amber-400 hover:underline">view</a></td>
+                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo1.websmith-shop.com')"
+                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
+                        </td>
                     </tr>
                     <tr>
                         <td class="px-4 py-3 text-sm font-medium text-white">Event Campaign Site</td>
@@ -141,8 +146,9 @@
                         <td class="px-4 py-3 text-sm text-neutral-400">Promotion of a single product, service, or
                             campaign</td>
                         <td class="px-4 py-3 text-sm text-neutral-300">$200–400</td>
-                        <td class="px-4 py-3 text-sm"><a href="/demo/event-campaign-site"
-                                class="text-amber-400 hover:underline">view</a></td>
+                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo4.websmith-shop.com')"
+                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
+                        </td>
                     </tr>
                     <tr>
                         <td class="px-4 py-3 text-sm font-medium text-white">Custom</td>
@@ -163,8 +169,10 @@
                 class="bg-neutral-800 border border-neutral-700 rounded-lg p-4 shadow-sm">
                 <div class="flex justify-between items-start mb-2">
                     <h3 class="text-lg font-semibold text-white">{{ siteType.name }}</h3>
-                    <a v-if="siteType.demoUrl !== '#'" :href="siteType.demoUrl"
-                        class="text-amber-400 text-sm hover:underline">demo</a>
+                    <button v-if="siteType.demoUrl !== '#'" @click="openDemo(siteType.demoUrl)"
+                        class="text-amber-400 text-sm hover:underline bg-transparent border-none cursor-pointer">
+                        demo
+                    </button>
                     <span v-else class="text-neutral-500 text-sm">—</span>
                 </div>
                 <div class="space-y-2 text-sm text-neutral-300">
@@ -234,6 +242,23 @@ import { useProjectModal } from '../composables/useProjectModal'
 
 const { isModalOpen, openModal, closeModal } = useProjectModal()
 
+// Function to open demo links with proper mobile handling
+function openDemo(url: string) {
+    // Check if we're on mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+
+    if (isMobile) {
+        // On mobile, try to open in new tab first, fallback to current window
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+            window.location.href = url
+        }
+    } else {
+        // On desktop, always open in new tab
+        window.open(url, '_blank', 'noopener,noreferrer')
+    }
+}
+
 const siteTypes = [
     {
         id: 'landing',
@@ -241,7 +266,7 @@ const siteTypes = [
         description: 'Single-page website focused on one service/product or event. Sales copy, bright design, call-to-action.',
         bestFor: 'Product launches, promotions, events, quick online presence',
         devPrice: '$200–500',
-        demoUrl: '/demo/landing-page'
+        demoUrl: 'https://demo6.websmith-shop.com'
     },
     {
         id: 'corporate',
@@ -249,7 +274,7 @@ const siteTypes = [
         description: '3–5 pages: home, services/products, about, contacts, reviews. More informative than landing.',
         bestFor: 'Service companies, small businesses, brands',
         devPrice: '$600–1200',
-        demoUrl: '/demo/corporate-services-website'
+        demoUrl: 'https://demo2.websmith-shop.com'
     },
     {
         id: 'portfolio',
@@ -257,7 +282,7 @@ const siteTypes = [
         description: 'Showcase of works with project descriptions, photos/videos and contacts.',
         bestFor: 'Designers, photographers, architects, freelancers',
         devPrice: '$300–700',
-        demoUrl: '/demo/portfolio-personal-page'
+        demoUrl: 'https://demo5.websmith-shop.com'
     },
     {
         id: 'ecommerce',
@@ -265,7 +290,7 @@ const siteTypes = [
         description: 'Basic e-commerce package with catalog (up to 20 products) and online payment. Admin panel for product management.',
         bestFor: 'Stores with small to medium product range, basic e-commerce',
         devPrice: '$1000–2500',
-        demoUrl: '/demo/ecommerce-storefront'
+        demoUrl: 'https://demo3.websmith-shop.com'
     },
     {
         id: 'blog',
@@ -273,7 +298,7 @@ const siteTypes = [
         description: 'Content management system with admin panel. From simple blog with categories to full news portal with API integration, external sources, and author management.',
         bestFor: 'Writers, journalists, content creators, news agencies, media companies',
         devPrice: '$1000–2500',
-        demoUrl: '/demo/blog-content-site'
+        demoUrl: 'https://demo1.websmith-shop.com'
     },
     {
         id: 'event',
@@ -281,7 +306,7 @@ const siteTypes = [
         description: 'Minimal page for specific event or offer.',
         bestFor: 'Promotion of a single product, service, or campaign',
         devPrice: '$200–400',
-        demoUrl: '/demo/event-campaign-site'
+        demoUrl: 'https://demo4.websmith-shop.com'
     },
     {
         id: 'custom',
