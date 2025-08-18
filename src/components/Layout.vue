@@ -7,9 +7,9 @@
             <nav class="max-w-4xl mx-auto flex justify-between items-center relative">
                 <!-- Логотип и заголовок -->
                 <div class="flex items-center min-w-0">
-                    <img src="../../src/assets/logos/image.png" class="h-10 w-auto flex-shrink-0" />
+                    <img src="../../src/assets/logos/image.png" class="h-10 w-auto flex-shrink-0 amber-filter" />
                     <h1 class="text-xl font-bold tracking-wide ml-2 truncate">
-                        TagSmith
+                        WebSmith
                     </h1>
                 </div>
 
@@ -21,9 +21,11 @@
                     <li>
                         <RouterLink to="/services" class="hover:text-amber-400">Services</RouterLink>
                     </li>
+                    <!--
                     <li>
                         <RouterLink to="/portfolio" class="hover:text-amber-400">Portfolio</RouterLink>
                     </li>
+                    -->
                     <li>
                         <RouterLink to="/contact" class="hover:text-amber-400">Contact</RouterLink>
                     </li>
@@ -48,10 +50,12 @@
                             <RouterLink to="/services" class="hover:text-amber-400" @click="isOpen = false">Services
                             </RouterLink>
                         </li>
+                        <!--
                         <li>
                             <RouterLink to="/portfolio" class="hover:text-amber-400" @click="isOpen = false">Portfolio
                             </RouterLink>
                         </li>
+                        -->
                         <li>
                             <RouterLink to="/contact" class="hover:text-amber-400" @click="isOpen = false">Contact
                             </RouterLink>
@@ -68,7 +72,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-xs text-neutral-400 py-4 border-t border-neutral-700">
-            © 2025 TagSmith. Crafted with Vue & Tailwind.
+            © 2025 WebSmith. Crafted with Vue & Tailwind.
         </footer>
 
         <!-- Promo Manager (only in development) -->
@@ -83,3 +87,10 @@ import PromoManager from './PromoManager.vue'
 
 const isOpen = ref(false)
 </script>
+<style scoped>
+.amber-filter {
+    filter: brightness(0) saturate(100%) invert(84%) sepia(31%) saturate(638%) hue-rotate(359deg) brightness(103%) contrast(107%);
+
+
+}
+</style>

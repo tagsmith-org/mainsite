@@ -119,7 +119,7 @@ export async function sendOrderEmails(orderData) {
         // Send to admin
         console.log('📤 Sending admin email to:', import.meta.env.VITE_ADMIN_EMAIL)
         const adminEmail = generateAdminEmail(orderData)
-        const adminResponse = await fetch(`${import.meta.env.VITE_API_URL}/send-email`, {
+        const adminResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/email/order`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -145,7 +145,7 @@ export async function sendOrderEmails(orderData) {
         }
 
         const clientEmail = generateClientEmail(orderData)
-        const clientResponse = await fetch(`${import.meta.env.VITE_API_URL}/send-email`, {
+        const clientResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/email/order`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

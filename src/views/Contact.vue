@@ -3,7 +3,7 @@
         <div class="max-w-xl mx-auto px-6">
             <h2 class="text-3xl font-bold mb-4 text-center text-amber-400">Get in touch</h2>
             <p class="text-neutral-300 text-center mb-10">
-                Have a project or idea? Send me a message — I’ll reply personally, usually within 24–48 hours.
+                Have a project or idea? Send me a message — I'll reply personally, usually within 24–48 hours.
             </p>
 
             <form class="space-y-5 bg-neutral-800 p-6 rounded-lg shadow-md" @submit.prevent="onSubmit">
@@ -43,12 +43,33 @@
                 </button>
             </form>
         </div>
+
+        <!-- Модальное окно с формой заявки -->
+        <ProjectRequestModal :is-open="isModalOpen" @close="closeModal" />
+
+        <!-- Toast notifications -->
+        <div v-if="toast.show" :class="toast.type === 'success' ? 'bg-green-600' : 'bg-red-600'"
+            class="fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg text-white max-w-sm transition-all duration-300">
+            <div class="flex items-center">
+                <span class="flex-1">{{ toast.message }}</span>
+                <button @click="hideToast" class="ml-3 text-white hover:text-gray-200">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
     </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import axios from 'axios'
+import ProjectRequestModal from '../components/ProjectRequestModal.vue'
+import { useProjectModal } from '../composables/useProjectModal'
+import { getContactUrl } from '../config/api.js'
 
 // Interface for the form state
 interface ContactForm {
@@ -58,12 +79,19 @@ interface ContactForm {
     message: string
 }
 
+// Toast state
+const toast = ref({
+    show: false,
+    message: '',
+    type: 'success' as 'success' | 'error'
+})
+
 // Options for the purpose selector
 const purposeOptions = [
-    { value: 'site-order', label: 'Заказ сайта' },
-    { value: 'bug-report', label: 'Отчет об ошибке' },
-    { value: 'improvement', label: 'Предложение по улучшению' },
-    { value: 'other', label: 'Другое' },
+    { value: 'site-order', label: 'Website Order' },
+    { value: 'bug-report', label: 'Bug Report' },
+    { value: 'improvement', label: 'Improvement Suggestion' },
+    { value: 'other', label: 'Other' },
 ]
 
 // Reactive form state
@@ -74,30 +102,96 @@ const form = ref<ContactForm>({
     message: '',
 })
 
-const router = useRouter()
+const { isModalOpen, openModal, closeModal } = useProjectModal()
+
+function getPurposeLabel(purpose: string): string {
+    const labels = {
+        'bug-report': 'Bug Report',
+        'improvement': 'Improvement Suggestion',
+        'other': 'Other'
+    }
+    return labels[purpose as keyof typeof labels] || purpose
+}
+
+function showToast(message: string, type: 'success' | 'error' = 'success') {
+    toast.value = {
+        show: true,
+        message,
+        type
+    }
+
+    // Auto hide after 5 seconds
+    setTimeout(() => {
+        hideToast()
+    }, 5000)
+}
+
+function hideToast() {
+    toast.value.show = false
+}
 
 // Form submit handler
-function onSubmit() {
+async function onSubmit() {
     if (form.value.purpose === 'site-order') {
-        // Redirect to the site order description page with message and contact info
-        router.push({
-            path: '/site-order',
-            query: {
-                description: form.value.message,
-                contact: form.value.email || form.value.name,
-                clientName: form.value.name,
-                clientEmail: form.value.email
-            }
-        })
+        openModal()
         return
     }
-    // eslint-disable-next-line no-console
-    console.log({
-        name: form.value.name,
-        email: form.value.email,
-        purpose: form.value.purpose,
-        message: form.value.message,
-    })
-    // Optionally, reset form or show success message
+
+    // Validate form data
+    if (!form.value.name || !form.value.email || !form.value.purpose || !form.value.message) {
+        showToast('Please fill in all fields', 'error')
+        return
+    }
+
+    try {
+        console.log('=== CONTACT FORM SUBMISSION START ===')
+        console.log('Form data:', {
+            name: form.value.name,
+            email: form.value.email,
+            purpose: form.value.purpose,
+            message: form.value.message
+        })
+
+        const requestData = {
+            name: form.value.name,
+            email: form.value.email,
+            subject: `Contact Form: ${getPurposeLabel(form.value.purpose)}`,
+            message: form.value.message
+        }
+
+        console.log('Request data:', requestData)
+        console.log('Sending to:', getContactUrl())
+
+        const response = await axios.post(getContactUrl(), requestData)
+
+        console.log('Response status:', response.status)
+        console.log('Response data:', response.data)
+
+        if (response.status === 200) {
+            console.log('Success! Message sent.')
+            showToast('Message sent successfully!', 'success')
+
+            form.value = {
+                name: '',
+                email: '',
+                purpose: '',
+                message: '',
+            }
+        } else {
+            console.log('Error in response data')
+            showToast('Error sending message. Please try again.', 'error')
+        }
+    } catch (error) {
+        console.error('=== CONTACT FORM ERROR ===')
+        console.error('Error type:', error.constructor.name)
+        console.error('Error message:', error.message)
+        if (error.response) {
+            console.error('Response status:', error.response.status)
+            console.error('Response data:', error.response.data)
+            console.error('Response details:', error.response.data.details)
+        }
+        console.error('Full error:', error)
+        showToast('Error sending message. Please try again.', 'error')
+    }
 }
 </script>

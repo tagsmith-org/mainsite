@@ -10,8 +10,10 @@
     "server:dev": "nodemon server-sqlite.cjs"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@headlessui/vue": "^1.7.16",
     "@vueuse/core": "^10.7.0",
+    "axios": "^1.11.0",
     "better-sqlite3": "^9.6.0",
     "cors": "^2.8.5",
     "element-plus": "^2.4.4",

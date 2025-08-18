@@ -206,7 +206,7 @@ crontab -e
 ### Step 3: Test Email
 ```bash
 # Test email sending
-curl -X POST http://localhost:3001/api/send-email \
+curl -X POST http://localhost:3001/api/email/order \
   -H "Content-Type: application/json" \
   -d '{
     "to": "test@example.com",
