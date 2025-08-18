@@ -33,8 +33,14 @@
 
                 <div>
                     <label class="block text-sm mb-1 text-neutral-400">Message</label>
-                    <textarea rows="5" v-model="form.message" placeholder="What's on your mind?"
-                        class="w-full px-4 py-2 bg-neutral-900 text-white rounded focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                    <textarea rows="5" v-model="form.message" placeholder="What's on your mind?" :class="[
+                        'w-full px-4 py-2 bg-neutral-900 text-white rounded focus:outline-none focus:ring-2 focus:ring-amber-500',
+                        form.message.trim().length < 10 && form.message.length > 0 ? 'border-red-500 border' : ''
+                    ]"></textarea>
+                    <div class="text-xs mt-1"
+                        :class="form.message.trim().length < 10 ? 'text-red-400' : 'text-neutral-500'">
+                        {{ form.message.trim().length }}/10 characters minimum
+                    </div>
                 </div>
 
                 <button type="submit"
@@ -143,6 +149,12 @@ async function onSubmit() {
         return
     }
 
+    // Validate message length (minimum 10 characters)
+    if (form.value.message.trim().length < 10) {
+        showToast('Message must be at least 10 characters long', 'error')
+        return
+    }
+
     try {
         console.log('=== CONTACT FORM SUBMISSION START ===')
         console.log('Form data:', {
@@ -188,7 +200,7 @@ async function onSubmit() {
         if (error.response) {
             console.error('Response status:', error.response.status)
             console.error('Response data:', error.response.data)
-            console.error('Response details:', error.response.data.details)
+            console.error('Response details:', (error.response.data as any).details)
         }
         console.error('Full error:', error)
         showToast('Error sending message. Please try again.', 'error')
