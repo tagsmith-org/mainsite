@@ -85,79 +85,16 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-neutral-700 bg-neutral-800">
-                    <tr>
-                        <td class="px-4 py-3 text-sm font-medium text-white">Landing Page</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">Single-page website focused on one
-                            service/product or event. Sales copy, bright design, call-to-action.</td>
-                        <td class="px-4 py-3 text-sm text-neutral-400">Product launches, promotions, events, quick
-                            online presence</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">$200–500</td>
-                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo6.websmith-shop.com')"
-                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
+                    <tr v-for="siteType in siteTypes" :key="siteType.id">
+                        <td class="px-4 py-3 text-sm font-medium text-white">{{ siteType.name }}</td>
+                        <td class="px-4 py-3 text-sm text-neutral-300">{{ siteType.description }}</td>
+                        <td class="px-4 py-3 text-sm text-neutral-400">{{ siteType.bestFor }}</td>
+                        <td class="px-4 py-3 text-sm text-neutral-300">{{ siteType.devPrice }}</td>
+                        <td class="px-4 py-3 text-sm">
+                            <button v-if="siteType.demoUrl !== '#'" @click="openDemo(siteType.demoUrl)"
+                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">demo</button>
+                            <span v-else class="text-neutral-500">—</span>
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3 text-sm font-medium text-white">Corporate Services Website</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">3–5 pages: home, services/products, about,
-                            contacts, reviews. More informative than landing.</td>
-                        <td class="px-4 py-3 text-sm text-neutral-400">Service companies, small businesses, brands</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">$600–1200</td>
-                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo2.websmith-shop.com')"
-                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3 text-sm font-medium text-white">Portfolio / Personal Page</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">Showcase of works with project descriptions,
-                            photos/videos and contacts.</td>
-                        <td class="px-4 py-3 text-sm text-neutral-400">Designers, photographers, architects, freelancers
-                        </td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">$300–700</td>
-                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo5.websmith-shop.com')"
-                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3 text-sm font-medium text-white">E-commerce Storefront</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">Basic e-commerce package with catalog (up to 20
-                            products) and online payment. Admin panel for product management.</td>
-                        <td class="px-4 py-3 text-sm text-neutral-400">Stores with small to medium product range, basic
-                            e-commerce</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">$1000–2500</td>
-                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo3.websmith-shop.com')"
-                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3 text-sm font-medium text-white">Blog / Content Site</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">Content management system with admin panel. From
-                            simple blog with categories to full news portal with API integration, external sources, and
-                            author management.</td>
-                        <td class="px-4 py-3 text-sm text-neutral-400">Writers, journalists, content creators, news
-                            agencies, media companies</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">$1000–2500</td>
-                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo1.websmith-shop.com')"
-                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3 text-sm font-medium text-white">Event Campaign Site</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">Minimal page for specific event or offer.</td>
-                        <td class="px-4 py-3 text-sm text-neutral-400">Promotion of a single product, service, or
-                            campaign</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">$200–400</td>
-                        <td class="px-4 py-3 text-sm"><button @click="openDemo('https://demo4.websmith-shop.com')"
-                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">view</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3 text-sm font-medium text-white">Custom</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">Individual project with unique requirements and
-                            functionality. Discussed and priced individually.</td>
-                        <td class="px-4 py-3 text-sm text-neutral-400">Complex projects, unique business needs, custom
-                            integrations</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">$2000+</td>
-                        <td class="px-4 py-3 text-sm"><span class="text-neutral-500">—</span></td>
                     </tr>
                 </tbody>
             </table>
