@@ -71,10 +71,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import ProjectRequestModal from '../components/ProjectRequestModal.vue'
 import { useProjectModal } from '../composables/useProjectModal'
+import { useSEO } from '../composables/useSEO'
 import { getContactUrl } from '../config/api.js'
 
 // Interface for the form state
@@ -100,15 +101,39 @@ const purposeOptions = [
     { value: 'other', label: 'Other' },
 ]
 
-// Reactive form state
+// Form state
 const form = ref<ContactForm>({
     name: '',
     email: '',
     purpose: '',
-    message: '',
+    message: ''
 })
 
 const { isModalOpen, openModal, closeModal } = useProjectModal()
+
+// SEO configuration for this page
+const { updateMetaTags } = useSEO({
+    title: 'Contact WebSmith Shop - Get Your Custom Website',
+    description: 'Ready to start your website project? Contact WebSmith Shop for professional web development services. Fast, reliable, and transparent pricing.',
+    keywords: 'contact web developer, website development contact, web design consultation, custom website quote, Vue.js developer contact',
+    ogTitle: 'Contact WebSmith Shop - Get Your Custom Website',
+    ogDescription: 'Ready to start your website project? Contact WebSmith Shop for professional web development services. Fast, reliable, and transparent pricing.',
+    ogImage: '/src/assets/site-images/hero.png',
+    canonical: 'https://websmith-shop.com/contact'
+})
+
+// Update SEO on component mount
+onMounted(() => {
+    updateMetaTags({
+        title: 'Contact WebSmith Shop - Get Your Custom Website',
+        description: 'Ready to start your website project? Contact WebSmith Shop for professional web development services. Fast, reliable, and transparent pricing.',
+        keywords: 'contact web developer, website development contact, web design consultation, custom website quote, Vue.js developer contact',
+        ogTitle: 'Contact WebSmith Shop - Get Your Custom Website',
+        ogDescription: 'Ready to start your website project? Contact WebSmith Shop for professional web development services. Fast, reliable, and transparent pricing.',
+        ogImage: '/src/assets/site-images/hero.png',
+        canonical: 'https://websmith-shop.com/contact'
+    })
+})
 
 function getPurposeLabel(purpose: string): string {
     const labels = {

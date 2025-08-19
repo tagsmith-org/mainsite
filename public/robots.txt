@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://websmith-shop.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1

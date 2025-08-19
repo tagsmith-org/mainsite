@@ -198,10 +198,36 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import ProjectRequestModal from '../components/ProjectRequestModal.vue'
 import { useProjectModal } from '../composables/useProjectModal'
+import { useSEO } from '../composables/useSEO'
 
-const { isModalOpen, openModal, closeModal } = useProjectModal()
+// SEO configuration for this page
+const { updateMetaTags } = useSEO({
+    title: 'WebSmith Shop - Custom Microsites Built Fast',
+    description: 'WebSmith Shop delivers handcrafted landing pages, showcase sites, and microsites with clean code and lightning-fast performance. Professional web development services.',
+    keywords: 'web development, landing pages, microsites, Vue.js, custom websites, fast websites, responsive design, professional web developer',
+    ogTitle: 'WebSmith Shop - Custom Microsites Built Fast',
+    ogDescription: 'WebSmith Shop delivers handcrafted landing pages, showcase sites, and microsites with clean code and lightning-fast performance. Professional web development services.',
+    ogImage: '/src/assets/site-images/hero.png',
+    canonical: 'https://websmith-shop.com/'
+})
+
+// Update SEO on component mount
+onMounted(() => {
+    updateMetaTags({
+        title: 'WebSmith Shop - Custom Microsites Built Fast',
+        description: 'WebSmith Shop delivers handcrafted landing pages, showcase sites, and microsites with clean code and lightning-fast performance. Professional web development services.',
+        keywords: 'web development, landing pages, microsites, Vue.js, custom websites, fast websites, responsive design, professional web developer',
+        ogTitle: 'WebSmith Shop - Custom Microsites Built Fast',
+        ogDescription: 'WebSmith Shop delivers handcrafted landing pages, showcase sites, and microsites with clean code and lightning-fast performance. Professional web development services.',
+        ogImage: '/src/assets/site-images/hero.png',
+        canonical: 'https://websmith-shop.com/'
+    })
+})
+
+// ... existing code ...
 </script>
 <style scoped>
 .hero-image-brightened {

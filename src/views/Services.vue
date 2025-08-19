@@ -174,10 +174,36 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import ProjectRequestModal from '../components/ProjectRequestModal.vue'
 import { useProjectModal } from '../composables/useProjectModal'
+import { useSEO } from '../composables/useSEO'
 
 const { isModalOpen, openModal, closeModal } = useProjectModal()
+
+// SEO configuration for this page
+const { updateMetaTags } = useSEO({
+    title: 'Website Development Services & Pricing - WebSmith Shop',
+    description: 'Professional website development services including landing pages, corporate sites, portfolios, e-commerce, and custom solutions. Transparent pricing from $200 to $2500+.',
+    keywords: 'website development, web design, landing pages, corporate websites, portfolio sites, e-commerce, custom web development, web development pricing, Vue.js development',
+    ogTitle: 'Website Development Services & Pricing - WebSmith Shop',
+    ogDescription: 'Professional website development services including landing pages, corporate sites, portfolios, e-commerce, and custom solutions. Transparent pricing from $200 to $2500+.',
+    ogImage: '/src/assets/site-images/hero.png',
+    canonical: 'https://websmith-shop.com/services'
+})
+
+// Update SEO on component mount
+onMounted(() => {
+    updateMetaTags({
+        title: 'Website Development Services & Pricing - WebSmith Shop',
+        description: 'Professional website development services including landing pages, corporate sites, portfolios, e-commerce, and custom solutions. Transparent pricing from $200 to $2500+.',
+        keywords: 'website development, web design, landing pages, corporate websites, portfolio sites, e-commerce, custom web development, web development pricing, Vue.js development',
+        ogTitle: 'Website Development Services & Pricing - WebSmith Shop',
+        ogDescription: 'Professional website development services including landing pages, corporate sites, portfolios, e-commerce, and custom solutions. Transparent pricing from $200 to $2500+.',
+        ogImage: '/src/assets/site-images/hero.png',
+        canonical: 'https://websmith-shop.com/services'
+    })
+})
 
 // Function to open demo links with proper mobile handling
 function openDemo(url: string) {
