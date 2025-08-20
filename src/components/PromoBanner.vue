@@ -30,6 +30,6 @@ const isPromoEnabled = computed(() => promoStore.isPromoActive)
 const promoDescription = computed(() => promoStore.promoDescription || 'Get a special discount!')
 
 function goToOrder() {
-    router.push('/site-order')
+    router.push('/contact')
 }
 </script>

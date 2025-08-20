@@ -6,6 +6,35 @@
                 Have a project or idea? Send me a message — I'll reply personally, usually within 24–48 hours.
             </p>
 
+            <!-- Get Quote Button -->
+            <div class="text-center mb-16">
+                <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">🚀 Ready to build your website?</h3>
+                    <p class="text-neutral-800 mb-6 text-lg">
+                        Get a custom quote for your project with transparent pricing
+                    </p>
+                    <button @click="openModal"
+                        class="bg-neutral-900 text-amber-500 px-8 py-4 rounded-lg hover:bg-neutral-800 transition-colors text-lg font-bold shadow-lg">
+                        Get Quote Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="flex items-center mb-12">
+                <div class="flex-1 h-px bg-neutral-700"></div>
+                <div class="px-4 text-neutral-500 text-sm">OR</div>
+                <div class="flex-1 h-px bg-neutral-700"></div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-amber-400 mb-2">Have questions?</h3>
+                <p class="text-neutral-300 text-lg">
+                    If you have any questions or need assistance, feel free to contact us
+                </p>
+            </div>
+
             <form class="space-y-5 bg-neutral-800 p-6 rounded-lg shadow-md" @submit.prevent="onSubmit">
                 <div>
                     <label class="block text-sm mb-1 text-neutral-400">Your Name</label>
@@ -48,6 +77,15 @@
                     Send
                 </button>
             </form>
+
+            <!-- Alternative Get Quote Button -->
+            <div class="text-center mt-6">
+                <p class="text-neutral-400 mb-3">Or get a custom quote for your website project:</p>
+                <button @click="openModal"
+                    class="bg-neutral-700 text-amber-400 px-6 py-2 rounded hover:bg-neutral-600 transition-colors font-medium">
+                    Get Website Quote
+                </button>
+            </div>
         </div>
 
         <!-- Модальное окно с формой заявки -->
@@ -95,7 +133,6 @@ const toast = ref({
 
 // Options for the purpose selector
 const purposeOptions = [
-    { value: 'site-order', label: 'Website Order' },
     { value: 'bug-report', label: 'Bug Report' },
     { value: 'improvement', label: 'Improvement Suggestion' },
     { value: 'other', label: 'Other' },
@@ -163,11 +200,6 @@ function hideToast() {
 
 // Form submit handler
 async function onSubmit() {
-    if (form.value.purpose === 'site-order') {
-        openModal()
-        return
-    }
-
     // Validate form data
     if (!form.value.name || !form.value.email || !form.value.purpose || !form.value.message) {
         showToast('Please fill in all fields', 'error')
