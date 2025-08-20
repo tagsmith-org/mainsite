@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { promoConfig, isDateInRange } from '../config/promo.js'
 
 export const usePromoStore = defineStore('promo', () => {
@@ -65,8 +65,31 @@ export const usePromoStore = defineStore('promo', () => {
     localStorage.setItem('activePromo', config.value.activePromo)
   }
 
-  // PromoManager visibility (only if VITE_PROMO_MANAGER === 'true')
-  const showPromoManager = computed(() => import.meta.env.VITE_PROMO_MANAGER === 'true')
+  // PromoManager visibility (only for admin)
+  const isAdmin = ref(false)
+  
+  // Проверяем IP клиента при загрузке
+  if (import.meta.env.VITE_PROMO_MANAGER === 'true') {
+    if (import.meta.env.DEV) {
+      isAdmin.value = true
+    } else {
+      // Получаем IP клиента через API
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          const clientIP = data.ip
+          const adminIPs = import.meta.env.VITE_ADMIN_IPS?.split(',') || []
+          isAdmin.value = adminIPs.includes(clientIP)
+        })
+        .catch(() => {
+          isAdmin.value = false
+        })
+    }
+  }
+  
+  const showPromoManager = computed(() => {
+    return import.meta.env.VITE_PROMO_MANAGER === 'true' && isAdmin.value
+  })
 
   return {
     config,
