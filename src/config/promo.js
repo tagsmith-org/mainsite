@@ -3,12 +3,12 @@
 
 export const promoConfig = {
   // Активная акция (измените на нужную)
-  activePromo: 'defaultPromo',
+  activePromo: 'firstOrdersPromo',
 
   // Акция, управляемая через .env (оставлена для справки)
   envPromo: {
     name: 'Env Promo',
-    discount: Number(import.meta.env.VITE_PROMO_DISCOUNT) || 0,
+    discount: (Number(import.meta.env.VITE_PROMO_DISCOUNT) || 0) / 100, // Конвертируем проценты в десятичную дробь
     startDate: import.meta.env.VITE_PROMO_START,
     endDate: import.meta.env.VITE_PROMO_END,
     label: import.meta.env.VITE_PROMO_LABEL,
@@ -16,14 +16,22 @@ export const promoConfig = {
     enabled: import.meta.env.VITE_PROMO_ENABLED === 'true'
   },
 
+  // Без скидки
+  noDiscount: {
+    name: 'No Discount',
+    discount: 0,
+    label: 'No discount',
+    description: 'No discount applied'
+  },
+
   // Примеры других акций (можно оставить для справки)
   summerPromo: {
     name: 'Summer Sale',
     discount: 0.1,
-    startDate: '2025-07-01',
-    endDate: '2025-08-01',
-    label: '10% until August 1',
-    description: 'Get 10% off on all website orders until August 1st!'
+    startDate: '2025-08-01',
+    endDate: '2025-09-01',
+    label: '10% until September 1',
+    description: 'Get 10% off on all website orders until September 1st!'
   },
   firstOrdersPromo: {
     name: 'First Orders',

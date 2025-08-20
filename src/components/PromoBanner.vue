@@ -20,14 +20,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { usePromoStore } from '../stores/promo.js'
 
 const router = useRouter()
+const promoStore = usePromoStore()
 
-// Прямое использование переменных окружения
-const isPromoEnabled = computed(() => import.meta.env.VITE_PROMO_ENABLED === 'true')
-const promoDiscount = computed(() => Number(import.meta.env.VITE_PROMO_DISCOUNT) || 0)
-const promoLabel = computed(() => import.meta.env.VITE_PROMO_LABEL || 'Special Offer!')
-const promoDescription = computed(() => import.meta.env.VITE_PROMO_DESCRIPTION || 'Get a special discount!')
+// Используем активную promotion из store
+const isPromoEnabled = computed(() => promoStore.isPromoActive)
+const promoDescription = computed(() => promoStore.promoDescription || 'Get a special discount!')
 
 function goToOrder() {
     router.push('/site-order')

@@ -9,7 +9,7 @@
                 <select v-model="selectedPromo" @change="switchPromo"
                     class="w-full px-2 py-1 bg-neutral-700 text-white rounded text-xs">
                     <option v-for="(promo, key) in availablePromos" :key="key" :value="key">
-                        {{ promo.name }} ({{ Math.round(promo.discount * 100) }}%)
+                        {{ promo.name }} {{ promo.discount > 0 ? '(' + Math.round(promo.discount * 100) + '%)' : '' }}
                     </option>
                 </select>
             </div>
@@ -23,7 +23,8 @@
                 </div>
                 <div class="flex justify-between">
                     <span>Discount:</span>
-                    <span class="text-amber-400">{{ Math.round(promoStore.currentDiscount * 100) }}%</span>
+                    <span class="text-amber-400">{{ promoStore.currentDiscount > 0 ?
+                        Math.round(promoStore.currentDiscount * 100) + '%' : 'No discount' }}</span>
                 </div>
                 <div class="flex justify-between">
                     <span>Current:</span>
@@ -45,12 +46,16 @@ import { usePromoStore } from '../stores/promo.js'
 
 const promoStore = usePromoStore()
 
-const selectedPromo = ref(promoStore.activePromo)
+const selectedPromo = computed({
+    get: () => promoStore.activePromo,
+    set: (value) => promoStore.setActivePromo(value)
+})
 
 const availablePromos = computed(() => {
     const promos = {}
     Object.keys(promoStore.config).forEach(key => {
-        if (key !== 'activePromo') {
+        // Исключаем envPromo и activePromo из списка
+        if (key !== 'activePromo' && key !== 'envPromo') {
             promos[key] = promoStore.config[key]
         }
     })
@@ -58,11 +63,11 @@ const availablePromos = computed(() => {
 })
 
 function switchPromo() {
-    promoStore.setActivePromo(selectedPromo.value)
+    // Функция больше не нужна, так как selectedPromo теперь computed
 }
 
 function reloadConfig() {
     promoStore.reloadConfig()
-    selectedPromo.value = promoStore.activePromo
+    // selectedPromo автоматически обновится через computed
 }
 </script>
