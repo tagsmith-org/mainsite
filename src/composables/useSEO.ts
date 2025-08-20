@@ -34,7 +34,7 @@ const defaultSEO: SEOConfig = {
 export function useSEO(config?: Partial<SEOConfig>) {
   const route = useRoute()
   
-  function updateMetaTags(seoConfig: SEOConfig) {
+  function updateMetaTags(seoConfig: Partial<SEOConfig>) {
     const mergedConfig = { ...defaultSEO, ...seoConfig }
     
     // Update document title
@@ -93,7 +93,7 @@ export function useSEO(config?: Partial<SEOConfig>) {
   // Watch for route changes and update SEO
   watch(() => route.path, () => {
     if (config) {
-      updateMetaTags(config)
+      updateMetaTags(config as SEOConfig)
     }
   }, { immediate: true })
   

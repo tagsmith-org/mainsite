@@ -203,6 +203,8 @@ import ProjectRequestModal from '../components/ProjectRequestModal.vue'
 import { useProjectModal } from '../composables/useProjectModal'
 import { useSEO } from '../composables/useSEO'
 
+const { isModalOpen, openModal, closeModal } = useProjectModal()
+
 // SEO configuration for this page
 const { updateMetaTags } = useSEO({
     title: 'WebSmith Shop - Custom Microsites Built Fast',
@@ -226,8 +228,6 @@ onMounted(() => {
         canonical: 'https://websmith-shop.com/'
     })
 })
-
-// ... existing code ...
 </script>
 <style scoped>
 .hero-image-brightened {
