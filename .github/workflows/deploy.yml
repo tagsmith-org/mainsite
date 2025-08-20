@@ -16,6 +16,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Create .env file for build
+        run: |
+          echo "🔧 Creating .env file for build..."
+          cat > .env << 'EOF'
+          ${{ secrets.ENV_CONTENT }}
+          EOF
+          echo "✅ .env file created for build"
+
       - name: Build project
         run: npm run build
 
@@ -60,20 +68,6 @@ jobs:
             # Set correct permissions
             chown -R www-data:www-data /var/www/mainsite/
             chmod -R 755 /var/www/mainsite/
-
-      - name: Create .env file from secrets
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            echo "🔧 Creating .env file from secrets..."
-            cd /var/www/mainsite
-            cat > .env << 'EOF'
-            ${{ secrets.ENV_CONTENT }}
-            EOF
-            echo "✅ .env file created successfully"
             
             # Restart nginx
             echo "🔄 Restarting nginx..."
