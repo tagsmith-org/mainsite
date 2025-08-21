@@ -1,3 +1,5 @@
+import { ref, readonly } from 'vue'
+
 interface GoogleAnalyticsConfig {
   measurementId: string
   debugMode?: boolean
@@ -12,13 +14,13 @@ declare global {
 
 export function useGoogleAnalytics() {
   const isInitialized = ref(false)
-  const config = ref<GoogleAnalyticsConfig | null>(null)
+  const analyticsConfig = ref<GoogleAnalyticsConfig | null>(null)
 
   function initialize(config: GoogleAnalyticsConfig) {
     if (isInitialized.value) return
 
     // Set configuration
-    config.value = config
+    analyticsConfig.value = config
 
     // Create dataLayer
     window.dataLayer = window.dataLayer || []
@@ -59,7 +61,7 @@ export function useGoogleAnalytics() {
       page_path: window.location.pathname
     })
 
-    if (config.value?.debugMode) {
+    if (analyticsConfig.value?.debugMode) {
       console.log('Page view tracked:', { title, location })
     }
   }
@@ -72,7 +74,7 @@ export function useGoogleAnalytics() {
 
     window.gtag('event', eventName, parameters)
 
-    if (config.value?.debugMode) {
+    if (analyticsConfig.value?.debugMode) {
       console.log('Event tracked:', eventName, parameters)
     }
   }
