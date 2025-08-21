@@ -155,6 +155,7 @@
 
             <!-- Submit Button -->
             <button type="submit" :disabled="isSubmitting || hasErrors"
+                @click="trackButtonClick('submit_project_request')"
                 class="w-full bg-amber-500 text-neutral-900 px-6 py-3 rounded-lg font-semibold hover:bg-amber-400 transition disabled:opacity-50 disabled:cursor-not-allowed">
                 <span v-if="isSubmitting">Sending...</span>
                 <span v-else-if="hasErrors">Please fix errors above</span>
@@ -182,6 +183,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { getOrderUrl } from '../config/api.js'
+import { useGoogleAnalytics } from '../composables/useGoogleAnalytics'
 
 interface FormData {
     name: string
@@ -219,6 +221,9 @@ const formData = ref<FormData>({
 
 const fieldErrors = ref<FieldErrors>({})
 const isSubmitting = ref(false)
+
+// Initialize Google Analytics
+const { trackFormSubmission, trackButtonClick } = useGoogleAnalytics()
 
 const emit = defineEmits<{ submitted: [] }>()
 
@@ -365,6 +370,9 @@ async function submitForm() {
         const result = await response.json()
 
         if (response.ok) {
+            // Track successful form submission
+            trackFormSubmission('project_request', true)
+            
             showToast('Request sent successfully! We will contact you soon.', 'success')
             emit('submitted')
 
@@ -381,11 +389,15 @@ async function submitForm() {
             // Clear all errors
             fieldErrors.value = {}
         } else {
+            // Track failed form submission
+            trackFormSubmission('project_request', false)
             showToast('Error sending request. Please try again.', 'error')
         }
 
     } catch (error) {
         console.error('TEST: ERROR:', error)
+        // Track failed form submission due to error
+        trackFormSubmission('project_request', false)
         showToast('Error sending request. Please try again.', 'error')
     } finally {
         isSubmitting.value = false

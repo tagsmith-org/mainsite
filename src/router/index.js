@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Services from '../views/Services.vue'
 import Portfolio from '../views/Portfolio.vue'
 import Contact from '../views/Contact.vue'
+import { useGoogleAnalytics } from '../composables/useGoogleAnalytics'
 
 const routes = [
   { 
@@ -53,7 +54,7 @@ const router = createRouter({
   routes,
 })
 
-// Global navigation guard to update meta tags
+// Global navigation guard to update meta tags and track analytics
 router.beforeEach((to, from, next) => {
   if (to.meta) {
     // Update document title
@@ -103,6 +104,12 @@ router.beforeEach((to, from, next) => {
   }
   
   next()
+})
+
+// Track page views after navigation
+router.afterEach((to) => {
+  const { trackPageView } = useGoogleAnalytics()
+  trackPageView(to.meta?.title || document.title)
 })
 
 function updateMetaTag(name, content) {

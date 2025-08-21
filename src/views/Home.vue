@@ -185,7 +185,7 @@
                 </p>
 
                 <!-- Кнопка для открытия модального окна -->
-                <button @click="openModal"
+                <button @click="handleStartProjectClick"
                     class="inline-block bg-amber-500 text-neutral-900 px-6 py-3 rounded-lg font-semibold hover:bg-amber-400 transition">
                     Start Your Project
                 </button>
@@ -198,12 +198,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import ProjectRequestModal from '../components/ProjectRequestModal.vue'
 import { useProjectModal } from '../composables/useProjectModal'
 import { useSEO } from '../composables/useSEO'
+import { useGoogleAnalytics } from '../composables/useGoogleAnalytics'
 
 const { isModalOpen, openModal, closeModal } = useProjectModal()
+
+// Initialize Google Analytics
+const { trackButtonClick, trackScroll } = useGoogleAnalytics()
 
 // SEO configuration for this page
 const { updateMetaTags } = useSEO({
@@ -216,6 +220,30 @@ const { updateMetaTags } = useSEO({
     canonical: 'https://websmith-shop.com/'
 })
 
+// Handle start project button click
+function handleStartProjectClick() {
+    trackButtonClick('start_project_cta')
+    openModal()
+}
+
+// Track scroll depth
+function handleScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight
+    const scrollPercent = Math.round((scrollTop / docHeight) * 100)
+
+    // Track at 25%, 50%, 75%, and 100% scroll depths
+    if (scrollPercent >= 25 && scrollPercent < 50) {
+        trackScroll(25)
+    } else if (scrollPercent >= 50 && scrollPercent < 75) {
+        trackScroll(50)
+    } else if (scrollPercent >= 75 && scrollPercent < 100) {
+        trackScroll(75)
+    } else if (scrollPercent >= 100) {
+        trackScroll(100)
+    }
+}
+
 // Update SEO on component mount
 onMounted(() => {
     updateMetaTags({
@@ -227,6 +255,14 @@ onMounted(() => {
         ogImage: '/src/assets/site-images/hero.png',
         canonical: 'https://websmith-shop.com/'
     })
+
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll)
+})
+
+// Clean up scroll listener on component unmount
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
 })
 </script>
 <style scoped>
