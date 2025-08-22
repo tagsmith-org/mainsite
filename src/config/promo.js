@@ -34,11 +34,14 @@ export const promoConfig = {
     description: 'Get 10% off on all website orders until September 1st!'
   },
   firstOrdersPromo: {
-    name: 'First Orders',
+    name: 'Launch Special',
     discount: 0.5,
-    maxOrders: 3,
-    label: '50% for first 3 orders',
-    description: 'First 3 orders get 50% discount!'
+    maxOrders: 5,
+    ordersTaken: 2, // Уже взято 2 заказа, осталось 3
+    startDate: '2025-07-15T00:00:00.000Z', // Начало акции (15 июля 2025)
+    endDate: '2025-10-15T23:59:59.999Z', // Конец акции (15 октября 2025)
+    label: '50% OFF - Launch Special',
+    description: 'Launch Special: 50% discount for first 5 orders!'
   },
   defaultPromo: {
     name: 'Default',

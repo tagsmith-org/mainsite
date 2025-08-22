@@ -35,6 +35,61 @@ export const usePromoStore = defineStore('promo', () => {
     return isPromoActive.value ? currentPromo.value.description : ''
   })
 
+  // Countdown timer
+  const countdown = ref({
+    months: 0,
+    days: 0,
+    hours: 0,
+    minutes: 0
+  })
+
+  // Remaining orders
+  const remainingOrders = computed(() => {
+    const promo = currentPromo.value
+    if (promo.maxOrders && promo.ordersTaken) {
+      return Math.max(0, promo.maxOrders - promo.ordersTaken)
+    }
+    return promo.maxOrders || 0
+  })
+
+  // Update countdown timer
+  function updateCountdown() {
+    const promo = currentPromo.value
+    if (promo.endDate) {
+      const now = new Date()
+      const end = new Date(promo.endDate)
+      const diff = end.getTime() - now.getTime()
+
+      if (diff > 0) {
+        // Calculate months
+        const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44)) // Average days per month
+        const remainingDays = diff % (1000 * 60 * 60 * 24 * 30.44)
+        
+        const days = Math.floor(remainingDays / (1000 * 60 * 60 * 24))
+        const hours = Math.floor((remainingDays % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+        const minutes = Math.floor((remainingDays % (1000 * 60 * 60)) / (1000 * 60))
+
+        countdown.value = { months, days, hours, minutes }
+      } else {
+        countdown.value = { months: 0, days: 0, hours: 0, minutes: 0 }
+      }
+    }
+  }
+
+  // Start countdown timer
+  let countdownInterval
+  onMounted(() => {
+    updateCountdown()
+    countdownInterval = setInterval(updateCountdown, 60000) // Update every minute instead of every second
+  })
+
+  // Cleanup interval on unmount
+  function cleanupCountdown() {
+    if (countdownInterval) {
+      clearInterval(countdownInterval)
+    }
+  }
+
   // Actions
   function setActivePromo(promoName) {
     if (config.value[promoName]) {
@@ -64,6 +119,8 @@ export const usePromoStore = defineStore('promo', () => {
     activePromo.value = config.value.activePromo
     localStorage.setItem('activePromo', config.value.activePromo)
   }
+
+
 
   // PromoManager visibility (only for admin)
   const isAdmin = ref(false)
@@ -99,11 +156,14 @@ export const usePromoStore = defineStore('promo', () => {
     currentDiscount,
     discountLabel,
     promoDescription,
+    countdown,
+    remainingOrders,
     setActivePromo,
     calculateDiscountedPrice,
     updatePromoConfig,
     reloadConfig,
     resetToDefault,
-    showPromoManager
+    showPromoManager,
+    cleanupCountdown
   }
 }) 

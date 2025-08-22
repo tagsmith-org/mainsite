@@ -19,6 +19,9 @@
                         <RouterLink to="/" class="hover:text-amber-400">Home</RouterLink>
                     </li>
                     <li>
+                        <RouterLink to="/what-we-do" class="hover:text-amber-400">What We Do</RouterLink>
+                    </li>
+                    <li>
                         <RouterLink to="/services" class="hover:text-amber-400">Services</RouterLink>
                     </li>
                     <!--
@@ -45,6 +48,10 @@
                         class="absolute top-full right-0 w-full bg-neutral-900 flex flex-col items-center py-4 space-y-4 z-50 md:hidden shadow-lg">
                         <li>
                             <RouterLink to="/" class="hover:text-amber-400" @click="isOpen = false">Home</RouterLink>
+                        </li>
+                        <li>
+                            <RouterLink to="/what-we-do" class="hover:text-amber-400" @click="isOpen = false">What We Do
+                            </RouterLink>
                         </li>
                         <li>
                             <RouterLink to="/services" class="hover:text-amber-400" @click="isOpen = false">Services

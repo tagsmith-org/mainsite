@@ -139,6 +139,94 @@
     <section id="tech-services" class="py-0 bg-neutral-900 text-white">
         <div class="max-w-5xl mx-auto px-6">
             <h2 class="text-2xl font-semibold text-center mb-12 text-amber-400">Technical Services</h2>
+
+            <!-- Website Reengineering - Featured Service -->
+            <div class="mb-12">
+                <div
+                    class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 p-8 rounded-xl shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-3">🔄</span>
+                        <h3 class="text-2xl font-bold text-amber-400">Website Reengineering</h3>
+                    </div>
+                    <p class="text-lg text-neutral-200 mb-6">
+                        Transform your old WordPress, Joomla, or Drupal site into a modern, fast, and cost-effective
+                        solution
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-8 mb-6">
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-3">What We Migrate From:</h4>
+                            <div class="space-y-2 text-neutral-300">
+                                <div class="flex items-center">
+                                    <span class="text-red-400 mr-2">❌</span>
+                                    <span>WordPress (slow, vulnerable, expensive)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="text-red-400 mr-2">❌</span>
+                                    <span>Joomla (complex, outdated)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="text-red-400 mr-2">❌</span>
+                                    <span>Drupal (overkill for most sites)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="text-red-400 mr-2">❌</span>
+                                    <span>Expensive cPanel hosting</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-3">What You Get:</h4>
+                            <div class="space-y-2 text-neutral-300">
+                                <div class="flex items-center">
+                                    <span class="text-green-400 mr-2">✅</span>
+                                    <span>Modern Astro or Vue.js site</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="text-green-400 mr-2">✅</span>
+                                    <span>Lightning-fast performance</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="text-green-400 mr-2">✅</span>
+                                    <span>Free or cheap hosting</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="text-green-400 mr-2">✅</span>
+                                    <span>Zero maintenance needed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-neutral-800 p-4 rounded-lg mb-6">
+                        <h4 class="text-lg font-semibold text-white mb-2">Cost Savings:</h4>
+                        <div class="grid md:grid-cols-3 gap-4 text-sm">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-red-400">$50-100</div>
+                                <div class="text-neutral-400">Old hosting cost/month</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-400">$0-15</div>
+                                <div class="text-neutral-400">New hosting cost/month</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-amber-400">70-100%</div>
+                                <div class="text-neutral-400">Annual savings</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button @click="openModal"
+                            class="inline-flex items-center justify-center rounded-lg bg-amber-500 hover:bg-amber-600 px-6 py-3 text-white font-semibold transition-colors">
+                            Get Migration Quote
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Technical Services -->
             <div class="grid md:grid-cols-2 gap-6 text-neutral-300 text-sm">
                 <div class="bg-neutral-800 p-6 rounded-lg shadow hover:shadow-md transition">
                     <h3 class="text-lg font-bold text-white mb-2">🖥️ Hosting on My Server</h3>
@@ -270,6 +358,14 @@ const siteTypes = [
         bestFor: 'Promotion of a single product, service, or campaign',
         devPrice: '$200–400',
         demoUrl: 'https://demo4.websmith-shop.com'
+    },
+    {
+        id: 'migration',
+        name: 'Website Migration',
+        description: 'Migrate from WordPress, Joomla, or Drupal to modern Astro/Vue.js. Faster, cheaper hosting, zero maintenance.',
+        bestFor: 'Businesses with old CMS sites, cost optimization, performance improvement',
+        devPrice: '$800–2000',
+        demoUrl: '#'
     },
     {
         id: 'custom',

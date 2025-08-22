@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Services from '../views/Services.vue'
 import Portfolio from '../views/Portfolio.vue'
 import Contact from '../views/Contact.vue'
+import WhatWeDo from '../views/WhatWeDo.vue'
 import { useGoogleAnalytics } from '../composables/useGoogleAnalytics'
 
 const routes = [
@@ -11,24 +12,37 @@ const routes = [
     path: '/', 
     component: Home,
     meta: {
-      title: 'WebSmith Shop - Custom Microsites Built Fast',
-      description: 'WebSmith Shop delivers handcrafted landing pages, showcase sites, and microsites with clean code and lightning-fast performance.',
-      keywords: 'web development, landing pages, microsites, Vue.js, custom websites, fast websites, responsive design',
-      ogTitle: 'WebSmith Shop - Custom Microsites Built Fast',
-      ogDescription: 'WebSmith Shop delivers handcrafted landing pages, showcase sites, and microsites with clean code and lightning-fast performance.',
+      title: 'WebSmith Shop - Modern Web Development with Astro & Vue.js',
+      description: 'Professional web development using modern technologies (Astro, Vue.js) for lightning-fast websites. Free hosting options, 70-100% cost savings vs WordPress. Custom landing pages, corporate sites, and web applications.',
+      keywords: 'modern web development, Astro framework, Vue.js development, fast websites, free hosting, Netlify, Vercel, Cloudflare, WordPress alternative, static site generation, JAMstack, web performance, cost-effective web development, landing pages, corporate websites, custom web applications',
+      ogTitle: 'WebSmith Shop - Modern Web Development with Astro & Vue.js',
+      ogDescription: 'Professional web development using modern technologies (Astro, Vue.js) for lightning-fast websites. Free hosting options, 70-100% cost savings vs WordPress. Custom landing pages, corporate sites, and web applications.',
       ogImage: '/src/assets/site-images/hero.png',
       canonical: 'https://websmith-shop.com/'
+    }
+  },
+  { 
+    path: '/what-we-do', 
+    component: WhatWeDo,
+    meta: {
+      title: 'Modern Web Development: Astro, Vue.js & Free Hosting - WebSmith Shop',
+      description: 'Discover how modern web technologies (Astro, Vue.js) beat WordPress with lightning-fast performance, free hosting (Netlify, Vercel, Cloudflare), and 70-100% cost savings. Seamless scaling from static sites to complex applications.',
+      keywords: 'Astro framework, Vue.js development, modern web technologies, WordPress alternative, free hosting, Netlify, Vercel, Cloudflare, static site generation, JAMstack, web performance, cost-effective web development, website migration, WordPress to Astro, modern vs traditional web development',
+      ogTitle: 'Modern Web Development: Astro, Vue.js & Free Hosting - WebSmith Shop',
+      ogDescription: 'Discover how modern web technologies (Astro, Vue.js) beat WordPress with lightning-fast performance, free hosting (Netlify, Vercel, Cloudflare), and 70-100% cost savings. Seamless scaling from static sites to complex applications.',
+      ogImage: '/src/assets/site-images/hero.png',
+      canonical: 'https://websmith-shop.com/what-we-do'
     }
   },
   { 
     path: '/services', 
     component: Services,
     meta: {
-      title: 'Website Development Services & Pricing - WebSmith Shop',
-      description: 'Professional website development services including landing pages, corporate sites, portfolios, e-commerce, and custom solutions. Transparent pricing from $200 to $2500+.',
-      keywords: 'website development, web design, landing pages, corporate websites, portfolio sites, e-commerce, custom web development, web development pricing',
-      ogTitle: 'Website Development Services & Pricing - WebSmith Shop',
-      ogDescription: 'Professional website development services including landing pages, corporate sites, portfolios, e-commerce, and custom solutions. Transparent pricing from $200 to $2500+.',
+      title: 'Website Development & Migration Services - WebSmith Shop',
+      description: 'Professional website development services with modern technologies (Astro, Vue.js). Website migration from WordPress/Joomla/Drupal to modern stack. Transparent pricing from $200 to $2500+. Free hosting options available.',
+      keywords: 'website development, website migration, WordPress to Astro, Joomla migration, Drupal migration, modern web development, Astro development, Vue.js development, free hosting, Netlify, Vercel, Cloudflare, web design, landing pages, corporate websites, portfolio sites, e-commerce, custom web development, web development pricing, cost-effective web solutions',
+      ogTitle: 'Website Development & Migration Services - WebSmith Shop',
+      ogDescription: 'Professional website development services with modern technologies (Astro, Vue.js). Website migration from WordPress/Joomla/Drupal to modern stack. Transparent pricing from $200 to $2500+. Free hosting options available.',
       ogImage: '/src/assets/site-images/hero.png',
       canonical: 'https://websmith-shop.com/services'
     }
@@ -38,11 +52,11 @@ const routes = [
     path: '/contact', 
     component: Contact,
     meta: {
-      title: 'Contact WebSmith Shop - Get Your Custom Website',
-      description: 'Ready to start your website project? Contact WebSmith Shop for professional web development services. Fast, reliable, and transparent pricing.',
-      keywords: 'contact web developer, website development contact, web design consultation, custom website quote',
-      ogTitle: 'Contact WebSmith Shop - Get Your Custom Website',
-      ogDescription: 'Ready to start your website project? Contact WebSmith Shop for professional web development services. Fast, reliable, and transparent pricing.',
+      title: 'Contact WebSmith Shop - Modern Web Development & Migration Services',
+      description: 'Ready to modernize your web presence? Contact WebSmith Shop for Astro/Vue.js development, WordPress migration, and cost-effective web solutions. Free consultation and transparent pricing.',
+      keywords: 'contact web developer, website migration consultation, Astro development quote, Vue.js development, WordPress to Astro migration, modern web development contact, free web development consultation, website redesign quote',
+      ogTitle: 'Contact WebSmith Shop - Modern Web Development & Migration Services',
+      ogDescription: 'Ready to modernize your web presence? Contact WebSmith Shop for Astro/Vue.js development, WordPress migration, and cost-effective web solutions. Free consultation and transparent pricing.',
       ogImage: '/src/assets/site-images/hero.png',
       canonical: 'https://websmith-shop.com/contact'
     }
