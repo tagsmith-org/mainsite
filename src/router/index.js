@@ -5,6 +5,9 @@ import Services from '../views/Services.vue'
 import Portfolio from '../views/Portfolio.vue'
 import Contact from '../views/Contact.vue'
 import WhatWeDo from '../views/WhatWeDo.vue'
+import PrivacyPolicy from '../views/PrivacyPolicy.vue'
+import Terms from '../views/Terms.vue'
+import Cookies from '../views/Cookies.vue'
 import { useGoogleAnalytics } from '../composables/useGoogleAnalytics'
 
 const routes = [
@@ -59,6 +62,45 @@ const routes = [
       ogDescription: 'Ready to modernize your web presence? Contact WebSmith Shop for Astro/Vue.js development, WordPress migration, and cost-effective web solutions. Free consultation and transparent pricing.',
       ogImage: '/src/assets/site-images/hero.png',
       canonical: 'https://websmith-shop.com/contact'
+    }
+  },
+  { 
+    path: '/privacy-policy', 
+    component: PrivacyPolicy,
+    meta: {
+      title: 'Privacy Policy - WebSmith Shop',
+      description: 'Privacy Policy for WebSmith Shop. Learn how we collect, use, and protect your personal data when you interact with our website.',
+      keywords: 'privacy policy, data protection, personal data, cookies, GDPR, privacy rights, data collection, website privacy',
+      ogTitle: 'Privacy Policy - WebSmith Shop',
+      ogDescription: 'Privacy Policy for WebSmith Shop. Learn how we collect, use, and protect your personal data when you interact with our website.',
+      ogImage: '/src/assets/site-images/hero.png',
+      canonical: 'https://websmith-shop.com/privacy-policy'
+    }
+  },
+  { 
+    path: '/terms', 
+    component: Terms,
+    meta: {
+      title: 'Terms of Use - WebSmith Shop',
+      description: 'Terms of Use for WebSmith Shop. Learn about acceptable use, intellectual property rights, and service terms for our web development services.',
+      keywords: 'terms of use, website terms, intellectual property, liability, service terms, web development terms, legal terms',
+      ogTitle: 'Terms of Use - WebSmith Shop',
+      ogDescription: 'Terms of Use for WebSmith Shop. Learn about acceptable use, intellectual property rights, and service terms for our web development services.',
+      ogImage: '/src/assets/site-images/hero.png',
+      canonical: 'https://websmith-shop.com/terms'
+    }
+  },
+  { 
+    path: '/cookies', 
+    component: Cookies,
+    meta: {
+      title: 'Cookie Policy - WebSmith Shop',
+      description: 'Cookie Policy for WebSmith Shop. Learn about how we use cookies to improve your browsing experience and website functionality.',
+      keywords: 'cookie policy, cookies, website cookies, browser cookies, cookie management, privacy cookies, analytics cookies',
+      ogTitle: 'Cookie Policy - WebSmith Shop',
+      ogDescription: 'Cookie Policy for WebSmith Shop. Learn about how we use cookies to improve your browsing experience and website functionality.',
+      ogImage: '/src/assets/site-images/hero.png',
+      canonical: 'https://websmith-shop.com/cookies'
     }
   },
 ]

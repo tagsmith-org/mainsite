@@ -79,7 +79,22 @@
 
         <!-- Footer -->
         <footer class="text-center text-xs text-neutral-400 py-4 border-t border-neutral-700">
-            © 2025 WebSmith. Crafted with Vue & Tailwind.
+            <div class="mb-2">
+                © 2025 WebSmith. Crafted with Vue & Tailwind.
+            </div>
+            <div class="space-x-4">
+                <RouterLink to="/privacy-policy" class="hover:text-amber-400 transition-colors">
+                    Privacy Policy
+                </RouterLink>
+                <span class="text-neutral-500">|</span>
+                <RouterLink to="/terms" class="hover:text-amber-400 transition-colors">
+                    Terms of Use
+                </RouterLink>
+                <span class="text-neutral-500">|</span>
+                <RouterLink to="/cookies" class="hover:text-amber-400 transition-colors">
+                    Cookie Policy
+                </RouterLink>
+            </div>
         </footer>
 
         <!-- Promo Manager (only in development) -->
@@ -89,6 +104,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import PromoBanner from './PromoBanner.vue'
 import PromoManager from './PromoManager.vue'
 
