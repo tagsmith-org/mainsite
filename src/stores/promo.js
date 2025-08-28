@@ -6,7 +6,7 @@ export const usePromoStore = defineStore('promo', () => {
   // Promo configuration from external file
   const config = ref(promoConfig)
 
-  // Current active promo - загружаем из localStorage или используем дефолт
+  // Current active promo - load from localStorage or use default
   const activePromo = ref(localStorage.getItem('activePromo') || config.value.activePromo)
 
   // Computed values
@@ -14,7 +14,7 @@ export const usePromoStore = defineStore('promo', () => {
   
   const isPromoActive = computed(() => {
     const promo = currentPromo.value
-    // noDiscount всегда неактивен
+    // noDiscount is always inactive
     if (promo.name === 'No Discount') return false
     if (promo.enabled === false) return false
     if (promo.startDate && promo.endDate) {
@@ -94,7 +94,7 @@ export const usePromoStore = defineStore('promo', () => {
   function setActivePromo(promoName) {
     if (config.value[promoName]) {
       activePromo.value = promoName
-      // Сохраняем выбор в localStorage
+      // Save choice to localStorage
       localStorage.setItem('activePromo', promoName)
     }
   }
@@ -110,7 +110,7 @@ export const usePromoStore = defineStore('promo', () => {
   function reloadConfig() {
     import('../config/promo.js').then(module => {
       config.value = module.promoConfig
-      // Не сбрасываем активную promotion при перезагрузке
+      // Don't reset active promotion on reload
       // activePromo.value = config.value.activePromo
     })
   }
@@ -125,12 +125,12 @@ export const usePromoStore = defineStore('promo', () => {
   // PromoManager visibility (only for admin)
   const isAdmin = ref(false)
   
-  // Проверяем IP клиента при загрузке
+  // Check client IP on load
   if (import.meta.env.VITE_PROMO_MANAGER === 'true') {
     if (import.meta.env.DEV) {
       isAdmin.value = true
     } else {
-      // Получаем IP клиента через API
+      // Get client IP via API
       fetch('https://api.ipify.org?format=json')
         .then(response => response.json())
         .then(data => {

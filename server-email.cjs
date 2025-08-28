@@ -4,9 +4,9 @@ const cors = require('cors')
 
 const app = express()
 
-// Настройка CORS
+// CORS configuration
 app.use(cors({
-    origin: 'http://localhost:5173', // Разрешаем запросы с Vite dev server
+    origin: 'http://localhost:5173', // Allow requests from Vite dev server
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -18,8 +18,8 @@ app.use(express.json())
 const transporter = nodemailer.createTransporter({
     service: 'gmail',
     auth: {
-        user: 'your-email@gmail.com', // Ваш Gmail
-        pass: 'your-app-password'     // App Password из Gmail
+        user: 'your-email@gmail.com', // Your Gmail
+        pass: 'your-app-password'     // App Password from Gmail
     }
 })
 

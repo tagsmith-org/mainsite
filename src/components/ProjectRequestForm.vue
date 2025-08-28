@@ -376,7 +376,7 @@ async function submitForm() {
             showToast('Request sent successfully! We will contact you soon.', 'success')
             emit('submitted')
 
-            // Очистить форму после успешной отправки
+            // Clear form after successful submission
             formData.value = {
                 name: '',
                 location: '',

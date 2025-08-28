@@ -10,7 +10,7 @@
                     class="relative bg-neutral-900 rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
                     <!-- Header -->
                     <div class="flex items-center justify-between p-6 border-b border-neutral-800">
-                        <h2 class="text-xl font-semibold text-white">Заявка на разработку сайта</h2>
+                        <h2 class="text-xl font-semibold text-white">Website Development Request</h2>
                         <button @click="closeModal" class="text-neutral-400 hover:text-white transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -49,7 +49,7 @@ function closeModal() {
 }
 
 function handleFormSubmitted() {
-    // Закрываем модальное окно после успешной отправки
+    // Close modal after successful submission
     setTimeout(() => {
         closeModal()
     }, 2000)

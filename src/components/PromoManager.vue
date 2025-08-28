@@ -54,7 +54,7 @@ const selectedPromo = computed({
 const availablePromos = computed(() => {
     const promos = {}
     Object.keys(promoStore.config).forEach(key => {
-        // Исключаем envPromo и activePromo из списка
+        // Exclude envPromo and activePromo from the list
         if (key !== 'activePromo' && key !== 'envPromo') {
             promos[key] = promoStore.config[key]
         }
@@ -63,11 +63,11 @@ const availablePromos = computed(() => {
 })
 
 function switchPromo() {
-    // Функция больше не нужна, так как selectedPromo теперь computed
+    // Function no longer needed as selectedPromo is now computed
 }
 
 function reloadConfig() {
     promoStore.reloadConfig()
-    // selectedPromo автоматически обновится через computed
+    // selectedPromo will automatically update via computed
 }
 </script>

@@ -2,13 +2,13 @@
 // Edit this file to change promo settings without server restart
 
 export const promoConfig = {
-  // Активная акция (измените на нужную)
+  // Active promo (change to the one you need)
   activePromo: 'firstOrdersPromo',
 
-  // Акция, управляемая через .env (оставлена для справки)
+  // Promo controlled via .env (left for reference)
   envPromo: {
     name: 'Env Promo',
-    discount: (Number(import.meta.env.VITE_PROMO_DISCOUNT) || 0) / 100, // Конвертируем проценты в десятичную дробь
+    discount: (Number(import.meta.env.VITE_PROMO_DISCOUNT) || 0) / 100, // Convert percentages to decimal
     startDate: import.meta.env.VITE_PROMO_START,
     endDate: import.meta.env.VITE_PROMO_END,
     label: import.meta.env.VITE_PROMO_LABEL,
@@ -16,7 +16,7 @@ export const promoConfig = {
     enabled: import.meta.env.VITE_PROMO_ENABLED === 'true'
   },
 
-  // Без скидки
+  // No discount
   noDiscount: {
     name: 'No Discount',
     discount: 0,
@@ -24,7 +24,7 @@ export const promoConfig = {
     description: 'No discount applied'
   },
 
-  // Примеры других акций (можно оставить для справки)
+  // Examples of other promos (can be left for reference)
   summerPromo: {
     name: 'Summer Sale',
     discount: 0.1,
@@ -37,9 +37,9 @@ export const promoConfig = {
     name: 'Launch Special',
     discount: 0.5,
     maxOrders: 5,
-    ordersTaken: 2, // Уже взято 2 заказа, осталось 3
-    startDate: '2025-07-15T00:00:00.000Z', // Начало акции (15 июля 2025)
-    endDate: '2025-10-15T23:59:59.999Z', // Конец акции (15 октября 2025)
+    ordersTaken: 2, // Already taken 2 orders, 3 remaining
+    startDate: '2025-07-15T00:00:00.000Z', // Start of promo (July 15, 2025)
+    endDate: '2025-10-15T23:59:59.999Z', // End of promo (October 15, 2025)
     label: '50% OFF - Launch Special',
     description: 'Launch Special: 50% discount for first 5 orders!'
   },

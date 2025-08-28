@@ -5,7 +5,7 @@
         <!-- Header -->
         <header class="px-6 py-4 shadow-md bg-neutral-800">
             <nav class="max-w-4xl mx-auto flex justify-between items-center relative">
-                <!-- Логотип и заголовок -->
+                <!-- Logo and title -->
                 <div class="flex items-center min-w-0">
                     <img src="../../src/assets/logos/image.png" class="h-10 w-auto flex-shrink-0 amber-filter" />
                     <h1 class="text-xl font-bold tracking-wide ml-2 truncate">
@@ -13,7 +13,7 @@
                     </h1>
                 </div>
 
-                <!-- Desktop меню -->
+                <!-- Desktop menu -->
                 <ul class="hidden md:flex space-x-6 text-sm uppercase">
                     <li>
                         <RouterLink to="/" class="hover:text-amber-400">Home</RouterLink>
@@ -34,7 +34,7 @@
                     </li>
                 </ul>
 
-                <!-- Бургер-иконка (только на мобильных) -->
+                <!-- Burger icon (mobile only) -->
                 <button class="md:hidden flex flex-col justify-center items-center w-10 h-10" @click="isOpen = !isOpen"
                     aria-label="Open menu">
                     <span class="block w-6 h-0.5 bg-white mb-1"></span>
@@ -42,7 +42,7 @@
                     <span class="block w-6 h-0.5 bg-white"></span>
                 </button>
 
-                <!-- Мобильное меню -->
+                <!-- Mobile menu -->
                 <transition name="fade">
                     <ul v-if="isOpen"
                         class="absolute top-full right-0 w-full bg-neutral-900 flex flex-col items-center py-4 space-y-4 z-50 md:hidden shadow-lg">

@@ -72,7 +72,7 @@
             <p class="text-neutral-400">Transparent: code is yours. Hosting and support — optional.</p>
         </header>
 
-        <!-- Таблица типов сайтов (десктоп) -->
+        <!-- Website types table (desktop) -->
         <div class="hidden md:block mb-12 overflow-hidden rounded-2xl border border-neutral-700 bg-neutral-800">
             <table class="min-w-full divide-y divide-neutral-700">
                 <thead class="bg-neutral-900">
@@ -100,7 +100,7 @@
             </table>
         </div>
 
-        <!-- Карточки для мобильных устройств -->
+        <!-- Cards for mobile devices -->
         <div class="md:hidden mb-12 space-y-4">
             <div v-for="siteType in siteTypes" :key="siteType.id"
                 class="bg-neutral-800 border border-neutral-700 rounded-lg p-4 shadow-sm">
@@ -257,7 +257,7 @@
         </div>
     </section>
 
-    <!-- Модальное окно с формой -->
+    <!-- Modal with form -->
     <ProjectRequestModal :is-open="isModalOpen" @close="closeModal" />
 </template>
 

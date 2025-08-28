@@ -78,7 +78,7 @@ import { usePromoStore } from '../stores/promo.js'
 const router = useRouter()
 const promoStore = usePromoStore()
 
-// Используем активную promotion из store
+// Use active promotion from store
 const isPromoEnabled = computed(() => promoStore.isPromoActive)
 const countdown = computed(() => promoStore.countdown)
 

@@ -4,17 +4,17 @@ import cors from 'cors'
 
 const app = express()
 
-// Более широкие CORS настройки
+// Broader CORS settings
 app.use(cors({
     origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
-    credentials: false, // Изменили на false
+    credentials: false, // Changed to false
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     preflightContinue: false,
     optionsSuccessStatus: 204
 }))
 
-// Дополнительные CORS заголовки
+// Additional CORS headers
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:5173')
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')

@@ -88,7 +88,7 @@
             </div>
         </div>
 
-        <!-- Модальное окно с формой заявки -->
+        <!-- Modal with request form -->
         <ProjectRequestModal :is-open="isModalOpen" @close="closeModal" />
 
         <!-- Toast notifications -->

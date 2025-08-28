@@ -1,6 +1,6 @@
 <template>
     <div class="w-full min-h-screen bg-neutral-900 text-white">
-        <!-- 1. Главный заголовок + оффер -->
+        <!-- 1. Main heading + offer -->
         <header class="relative py-16 border-b border-neutral-800 overflow-hidden">
             <div class="absolute inset-0 w-full h-full">
                 <img src="../../src/assets/site-images/image2.png" alt="Hero background"
@@ -16,11 +16,11 @@
                     I craft microsites, landing pages, and promo sites using Vue 3 / Nuxt — no templates, no CMS. Just
                     clean code, responsive layouts, and an engineer's precision.
                 </p>
-                <!-- Кнопка "View Services" удалена -->
+                <!-- "View Services" button removed -->
             </div>
         </header>
 
-        <!-- 2. Что ты предлагаешь (3 формата сайтов) -->
+        <!-- 2. What you offer (3 site formats) -->
         <section id="formats" class="py-20 bg-neutral-800">
             <div class="max-w-5xl mx-auto px-6">
                 <h2 class="text-2xl font-semibold text-center mb-12 text-amber-400">Site Formats</h2>
@@ -54,7 +54,7 @@
             </div>
         </section>
 
-        <!-- 3. Почему именно ты (блок преимуществ) -->
+        <!-- 3. Why choose you (advantages block) -->
         <section id="advantages1" class="py-20">
             <div class="max-w-5xl mx-auto px-6">
                 <h2 class="text-2xl font-semibold text-center mb-12 text-amber-400">Why Work With Me</h2>
@@ -91,7 +91,7 @@
             </div>
         </section>
 
-        <!-- 4. Как происходит работа (пошагово) -->
+        <!-- 4. How the work process works (step by step) -->
         <section id="process" class="py-20 bg-neutral-800">
             <div class="max-w-4xl mx-auto px-6">
                 <h2 class="text-2xl font-semibold text-center mb-12 text-amber-400">How the Process Works</h2>
@@ -145,7 +145,7 @@
             </div>
         </section>
 
-        <!-- 5. Дополнительные услуги -->
+        <!-- 5. Additional services -->
         <section id="services" class="py-20">
             <div class="max-w-4xl mx-auto px-4 text-neutral-300 text-sm">
                 <h2 class="text-2xl font-semibold text-center mb-12 text-amber-400">Optional Services & Support</h2>
@@ -176,7 +176,7 @@
             </div>
         </section>
 
-        <!-- 6. CTA-блок (призыв связаться) -->
+        <!-- 6. CTA block (call to action) -->
         <section id="cta" class="py-16 bg-neutral-900 text-white">
             <div class="max-w-4xl mx-auto px-6 text-center">
                 <h2 class="text-2xl font-semibold mb-4 text-amber-400">Ready to talk about your project?</h2>
@@ -184,7 +184,7 @@
                     Get in touch however you prefer — I respond fast and to the point.
                 </p>
 
-                <!-- Кнопка для открытия модального окна -->
+                <!-- Button to open modal -->
                 <button @click="handleStartProjectClick"
                     class="inline-block bg-amber-500 text-neutral-900 px-6 py-3 rounded-lg font-semibold hover:bg-amber-400 transition">
                     Start Your Project
@@ -192,7 +192,7 @@
             </div>
         </section>
 
-        <!-- Модальное окно с формой -->
+        <!-- Modal with form -->
         <ProjectRequestModal :is-open="isModalOpen" @close="closeModal" />
     </div>
 </template>
