@@ -76,26 +76,16 @@ jobs:
           target: "/var/www/mainsite/"
 
       - name: Move files to correct location and setup
-        uses: appleboy/ssh-action@v1.0.3    
-        with: 
+        uses: appleboy/ssh-action@v1.0.3
+        with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            echo "Moving files to correct location..."
             cd /var/www/mainsite
             mv dist/* .
             rmdir dist
-            echo "Files moved successfully"
             chmod -R 755 /var/www/mainsite/
-
-            if [ -f /etc/caddy/Caddyfile ]; then
-              cp /etc/caddy/Caddyfile /etc/caddy/Caddyfile.bak.seo || true
-              python3 -c "from pathlib import Path; p=Path('/etc/caddy/Caddyfile'); t=p.read_text(); n=t.replace('try_files {path} /index.html','try_files {path} {path}/index.html').replace('try_files {path} {path}/ /index.html','try_files {path} {path}/index.html');
-print('Caddyfile changed' if n!=t else 'Caddyfile unchanged');
-p.write_text(n) if n!=t else None; print(p.read_text()[:2000])"
-            fi
-
             if systemctl is-active --quiet caddy; then
               echo "Reloading Caddy..."
               systemctl reload caddy || caddy reload
