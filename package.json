@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.mjs",
+    "build:spa": "vite build",
+    "prerender": "node scripts/prerender.mjs",
     "preview": "vite preview",
     "server": "node server-sqlite.cjs",
     "server:dev": "nodemon server-sqlite.cjs"
@@ -29,6 +31,7 @@
     "autoprefixer": "^10.4.16",
     "nodemon": "^3.0.2",
     "postcss": "^8.4.32",
+    "puppeteer": "^24.15.0",
     "tailwindcss": "^3.3.6",
     "vite": "^5.0.8"
   }

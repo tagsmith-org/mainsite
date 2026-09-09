@@ -1,26 +1,27 @@
 <template>
     <Transition name="modal">
-        <div v-if="isOpen" class="fixed inset-0 z-50 overflow-y-auto">
+        <div v-if="isOpen" class="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true"
+            aria-labelledby="project-request-title">
             <!-- Overlay -->
             <div class="fixed inset-0 bg-black bg-opacity-75 transition-opacity" @click="closeModal"></div>
 
             <!-- Modal -->
-            <div class="flex min-h-full items-center justify-center p-4">
+            <div class="flex min-h-full items-end justify-center p-0 sm:items-center sm:p-4">
                 <div
-                    class="relative bg-neutral-900 rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-                    <!-- Header -->
-                    <div class="flex items-center justify-between p-6 border-b border-neutral-800">
-                        <h2 class="text-xl font-semibold text-white">Website Development Request</h2>
-                        <button @click="closeModal" class="text-neutral-400 hover:text-white transition-colors">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="relative mx-0 w-full max-h-[85dvh] overflow-y-auto rounded-t-2xl bg-neutral-900 pb-[env(safe-area-inset-bottom)] shadow-xl sm:mx-4 sm:max-w-2xl sm:rounded-lg">
+                    <div class="sticky top-0 z-10 flex items-center justify-between border-b border-neutral-800 bg-neutral-900 p-4 sm:p-6">
+                        <h2 id="project-request-title" class="font-display text-lg font-semibold text-white sm:text-xl">Project request</h2>
+                        <button type="button"
+                            class="inline-flex h-11 w-11 items-center justify-center text-neutral-400 transition-colors hover:text-white"
+                            aria-label="Close" @click="closeModal">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
                     </div>
 
-                    <!-- Content -->
-                    <div class="p-6">
+                    <div class="p-4 sm:p-6">
                         <ProjectRequestForm @submitted="handleFormSubmitted" />
                     </div>
                 </div>
@@ -30,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onUnmounted, watch } from 'vue'
 import ProjectRequestForm from './ProjectRequestForm.vue'
 
 interface Props {
@@ -48,8 +49,25 @@ function closeModal() {
     emit('close')
 }
 
+function onKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+        closeModal()
+    }
+}
+
+watch(() => props.isOpen, (open) => {
+    if (open) {
+        document.addEventListener('keydown', onKeydown)
+    } else {
+        document.removeEventListener('keydown', onKeydown)
+    }
+})
+
+onUnmounted(() => {
+    document.removeEventListener('keydown', onKeydown)
+})
+
 function handleFormSubmitted() {
-    // Close modal after successful submission
     setTimeout(() => {
         closeModal()
     }, 2000)

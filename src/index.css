@@ -1,6 +1,63 @@
-@import '/src/app.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-family: "DM Sans", system-ui, sans-serif;
+  background-color: #262626;
+  color: #fafafa;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: Outfit, system-ui, sans-serif;
+}
+
+@layer base {
+  a,
+  button {
+    touch-action: manipulation;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 1rem;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex min-h-11 items-center justify-center rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-neutral-900 transition-colors hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400;
+  }
+
+  .btn-secondary {
+    @apply inline-flex min-h-11 items-center justify-center rounded-lg border border-neutral-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-amber-400 hover:text-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400;
+  }
+
+  .nav-link {
+    @apply transition-colors hover:text-amber-400;
+  }
+
+  .nav-link-active {
+    @apply text-amber-400;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

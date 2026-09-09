@@ -9,7 +9,6 @@
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
                 <!-- Left side - Main offer -->
                 <div class="flex items-center gap-3">
-                    <span class="text-3xl animate-bounce">🎁</span>
                     <div class="text-center md:text-left">
                         <div class="font-bold text-xl md:text-2xl">
                             {{ promoStore.currentPromo.label }}

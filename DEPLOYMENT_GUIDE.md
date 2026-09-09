@@ -117,6 +117,27 @@ pm2 save
 pm2 startup
 ```
 
+## Caddy (production)
+
+Live `websmith-shop.com` is served by Caddy. After prerender, each public route is a real file (`/work` -> `work/index.html`). Unknown URLs must return `404.html`, not the home SPA shell.
+
+Use `mainsite/deploy/Caddyfile.static`:
+
+```
+try_files {path} {path}/index.html
+file_server
+
+handle_errors {
+	@missing expression `{err.status_code} == 404`
+	handle @missing {
+		rewrite * /404.html
+		file_server
+	}
+}
+```
+
+Do not fall back missing paths to `/index.html`. That would serve Home HTML for `/work` after prerender, and hide 404s from crawlers.
+
 ## 🌐 Nginx Configuration
 
 ### Step 1: Create Nginx Config
@@ -129,7 +150,8 @@ server {
     # Frontend (Vue.js build)
     location / {
         root /var/www/mainsite;
-        try_files $uri $uri/ /index.html;
+        try_files $uri $uri/index.html $uri/ =404;
+        error_page 404 /404.html;
         
         # Cache static assets
         location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {

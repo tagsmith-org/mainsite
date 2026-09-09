@@ -5,7 +5,8 @@ const API_CONFIG = {
     baseURL: 'http://localhost:3000',
     endpoints: {
       contact: '/api/email/contact',
-      order: '/api/email/order'
+      order: '/api/email/order',
+      unsubscribe: '/api/unsubscribe'
     }
   },
   
@@ -14,7 +15,8 @@ const API_CONFIG = {
     baseURL: 'https://api.websmith-shop.com',
     endpoints: {
       contact: '/api/email/contact',
-      order: '/api/email/order'
+      order: '/api/email/order',
+      unsubscribe: '/api/unsubscribe'
     }
   }
 }
@@ -36,6 +38,10 @@ export function getContactUrl() {
 
 export function getOrderUrl() {
   return getApiUrl('order')
+}
+
+export function getUnsubscribeUrl() {
+  return getApiUrl('unsubscribe')
 }
 
 // Log current configuration

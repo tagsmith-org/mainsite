@@ -1,385 +1,180 @@
 <template>
-    <!-- Cards: Development Only / Development + Maintenance -->
-    <div class="grid gap-6 md:grid-cols-2">
-        <!-- Development Only -->
-        <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
-            <h3 class="text-xl font-semibold text-amber-400">Development Only</h3>
-            <p class="mt-1 text-sm text-gray-600">Source code and instructions — on your side.</p>
-            <div class="mt-4 space-y-2 text-sm">
-                <div class="flex items-start gap-2">
-                    <span class="mt-1 inline-block h-2 w-2 rounded-full bg-emerald-500"></span>
-                    <span>Website development of selected type (Landing, multi-page, portfolio, store, etc.)</span>
-                </div>
-                <div class="flex items-start gap-2">
-                    <span class="mt-1 inline-block h-2 w-2 rounded-full bg-emerald-500"></span>
-                    <span>Source code: archive or GitHub repository</span>
-                </div>
-                <div class="flex items-start gap-2">
-                    <span class="mt-1 inline-block h-2 w-2 rounded-full bg-emerald-500"></span>
-                    <span>README with clear deployment steps</span>
-                </div>
-            </div>
-            <div class="mt-6">
-                <div class="text-2xl font-bold">from $200 to $2500+</div>
-                <div class="text-xs text-gray-500">depending on type and complexity</div>
-            </div>
-            <div class="mt-6">
-                <button @click="openModal"
-                    class="inline-flex items-center justify-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50">
-                    Submit Request
-                </button>
-            </div>
-        </div>
-
-        <!-- Development + Maintenance -->
-        <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
-            <h3 class="text-xl font-semibold text-amber-400">Development + Maintenance</h3>
-            <p class="mt-1 text-sm text-gray-600">I host and maintain your website.</p>
-            <div class="mt-4 space-y-2 text-sm">
-                <div class="flex items-start gap-2">
-                    <span class="mt-1 inline-block h-2 w-2 rounded-full bg-blue-600"></span>
-                    <span>Everything from "Development Only" plan</span>
-                </div>
-                <div class="flex items-start gap-2">
-                    <span class="mt-1 inline-block h-2 w-2 rounded-full bg-blue-600"></span>
-                    <span>Hosting on Hetzner VPS</span>
-                </div>
-                <div class="flex items-start gap-2">
-                    <span class="mt-1 inline-block h-2 w-2 rounded-full bg-blue-600"></span>
-                    <span>Technical support: updates, monitoring, minor fixes</span>
-                </div>
-            </div>
-            <div class="mt-6">
-                <div class="text-2xl font-bold">+$15–30/mo</div>
-                <div class="text-xs text-gray-500">additional to development cost</div>
-            </div>
-            <div class="mt-6">
-                <button @click="openModal"
-                    class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
-                    Connect Maintenance
-                </button>
-            </div>
-            <div class="mt-4 text-xs text-gray-500">
-                Domain is paid by client separately (I can help register if needed).
-            </div>
-        </div>
-    </div>
-
-    <!-- Pricing Section -->
-    <section class="mx-auto max-w-6xl px-4 py-12">
-        <header class="mb-8 text-center">
-            <h2 class="text-2xl font-semibold text-center text-amber-400">Website Development Pricing</h2>
-            <p class="text-neutral-400">Transparent: code is yours. Hosting and support — optional.</p>
+    <div class="mx-auto max-w-6xl px-4 py-12 text-white sm:px-6 sm:py-16">
+        <header class="mb-10 text-center sm:mb-12">
+            <h1 class="font-display text-3xl font-extrabold sm:text-4xl">What we can build</h1>
+            <p class="mx-auto mt-4 max-w-2xl text-base text-neutral-300">
+                Start with the outcome. The tools come second. Figures below are starting
+                points, then by agreement — every project is different. Domain is paid separately.
+            </p>
+            <nav class="mt-8 flex flex-wrap justify-center gap-2 text-sm sm:gap-3">
+                <a v-for="offer in offers" :key="offer.id" :href="`#${offer.id}`"
+                    class="inline-flex min-h-11 items-center rounded-full border border-neutral-700 px-4 py-2 text-neutral-300 hover:border-amber-400 hover:text-amber-400">
+                    {{ offer.title }}
+                </a>
+                <a href="#care"
+                    class="inline-flex min-h-11 items-center rounded-full border border-neutral-700 px-4 py-2 text-neutral-300 hover:border-amber-400 hover:text-amber-400">Care</a>
+            </nav>
         </header>
 
-        <!-- Website types table (desktop) -->
-        <div class="hidden md:block mb-12 overflow-hidden rounded-2xl border border-neutral-700 bg-neutral-800">
-            <table class="min-w-full divide-y divide-neutral-700">
-                <thead class="bg-neutral-900">
-                    <tr>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-300">Website Type</th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-300">Description</th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-300">Best For</th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-300">Development Price</th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-300">Demo</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-neutral-700 bg-neutral-800">
-                    <tr v-for="siteType in siteTypes" :key="siteType.id">
-                        <td class="px-4 py-3 text-sm font-medium text-white">{{ siteType.name }}</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">{{ siteType.description }}</td>
-                        <td class="px-4 py-3 text-sm text-neutral-400">{{ siteType.bestFor }}</td>
-                        <td class="px-4 py-3 text-sm text-neutral-300">{{ siteType.devPrice }}</td>
-                        <td class="px-4 py-3 text-sm">
-                            <button v-if="siteType.demoUrl !== '#'" @click="openDemo(siteType.demoUrl)"
-                                class="text-amber-400 hover:underline bg-transparent border-none cursor-pointer">demo</button>
-                            <span v-else class="text-neutral-500">—</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <section id="simple-sites" class="scroll-mt-28 border-t border-neutral-800 py-10 sm:scroll-mt-32 sm:py-14">
+            <h2 class="font-display text-2xl font-semibold text-amber-400">Simple sites</h2>
+            <p class="mt-2 max-w-2xl text-sm text-neutral-400">{{ offers[0].stack }}</p>
 
-        <!-- Cards for mobile devices -->
-        <div class="md:hidden mb-12 space-y-4">
-            <div v-for="siteType in siteTypes" :key="siteType.id"
-                class="bg-neutral-800 border border-neutral-700 rounded-lg p-4 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-lg font-semibold text-white">{{ siteType.name }}</h3>
-                    <button v-if="siteType.demoUrl !== '#'" @click="openDemo(siteType.demoUrl)"
-                        class="text-amber-400 text-sm hover:underline bg-transparent border-none cursor-pointer">
-                        demo
-                    </button>
-                    <span v-else class="text-neutral-500 text-sm">—</span>
-                </div>
-                <div class="space-y-2 text-sm text-neutral-300">
-                    <div class="mb-2">
-                        <p class="text-xs text-neutral-400">{{ siteType.description }}</p>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>Development:</span>
-                        <span class="font-medium text-white">{{ siteType.devPrice }}</span>
-                    </div>
-                    <div class="pt-2 border-t border-neutral-700">
-                        <p class="text-xs text-neutral-400">{{ siteType.bestFor }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Notices -->
-        <div class="mt-6 space-y-2 text-sm text-neutral-400">
-            <p>All prices are approximate and depend on design and integrations. Final estimate is fixed before work
-                begins.</p>
-            <p>Domain <span class="font-medium">not included</span> in cost: client pays separately (I can help register
-                if needed).</p>
-        </div>
-    </section>
-
-    <section id="tech-services" class="py-0 bg-neutral-900 text-white">
-        <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-2xl font-semibold text-center mb-12 text-amber-400">Technical Services</h2>
-
-            <!-- Website Reengineering - Featured Service -->
-            <div class="mb-12">
-                <div
-                    class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 p-8 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <span class="text-3xl mr-3">🔄</span>
-                        <h3 class="text-2xl font-bold text-amber-400">Website Reengineering</h3>
-                    </div>
-                    <p class="text-lg text-neutral-200 mb-6">
-                        Transform your old WordPress, Joomla, or Drupal site into a modern, fast, and cost-effective
-                        solution
-                    </p>
-
-                    <div class="grid md:grid-cols-2 gap-8 mb-6">
-                        <div>
-                            <h4 class="text-lg font-semibold text-white mb-3">What We Migrate From:</h4>
-                            <div class="space-y-2 text-neutral-300">
-                                <div class="flex items-center">
-                                    <span class="text-red-400 mr-2">❌</span>
-                                    <span>WordPress (slow, vulnerable, expensive)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-red-400 mr-2">❌</span>
-                                    <span>Joomla (complex, outdated)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-red-400 mr-2">❌</span>
-                                    <span>Drupal (overkill for most sites)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-red-400 mr-2">❌</span>
-                                    <span>Expensive cPanel hosting</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h4 class="text-lg font-semibold text-white mb-3">What You Get:</h4>
-                            <div class="space-y-2 text-neutral-300">
-                                <div class="flex items-center">
-                                    <span class="text-green-400 mr-2">✅</span>
-                                    <span>Modern Astro or Vue.js site</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-green-400 mr-2">✅</span>
-                                    <span>Lightning-fast performance</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-green-400 mr-2">✅</span>
-                                    <span>Free or cheap hosting</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-green-400 mr-2">✅</span>
-                                    <span>Zero maintenance needed</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-neutral-800 p-4 rounded-lg mb-6">
-                        <h4 class="text-lg font-semibold text-white mb-2">Cost Savings:</h4>
-                        <div class="grid md:grid-cols-3 gap-4 text-sm">
-                            <div class="text-center">
-                                <div class="text-2xl font-bold text-red-400">$50-100</div>
-                                <div class="text-neutral-400">Old hosting cost/month</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl font-bold text-green-400">$0-15</div>
-                                <div class="text-neutral-400">New hosting cost/month</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl font-bold text-amber-400">70-100%</div>
-                                <div class="text-neutral-400">Annual savings</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="text-center">
-                        <button @click="openModal"
-                            class="inline-flex items-center justify-center rounded-lg bg-amber-500 hover:bg-amber-600 px-6 py-3 text-white font-semibold transition-colors">
-                            Get Migration Quote
-                        </button>
-                    </div>
-                </div>
+            <div class="mt-8 hidden overflow-hidden rounded-xl border border-neutral-700 md:block">
+                <table class="min-w-full divide-y divide-neutral-700 text-sm">
+                    <thead class="bg-neutral-800">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold text-neutral-300">Type</th>
+                            <th class="px-4 py-3 text-left font-semibold text-neutral-300">For you</th>
+                            <th class="px-4 py-3 text-left font-semibold text-neutral-300">Best for</th>
+                            <th class="px-4 py-3 text-left font-semibold text-neutral-300">From</th>
+                            <th class="px-4 py-3 text-left font-semibold text-neutral-300">Demo</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-neutral-800">
+                        <tr v-for="siteType in siteTypes" :key="siteType.id">
+                            <td class="px-4 py-3 font-medium text-white">{{ siteType.name }}</td>
+                            <td class="px-4 py-3 text-neutral-300">{{ siteType.description }}</td>
+                            <td class="px-4 py-3 text-neutral-400">{{ siteType.bestFor }}</td>
+                            <td class="whitespace-nowrap px-4 py-3 text-amber-400">{{ siteType.price }}</td>
+                            <td class="px-4 py-3">
+                                <button v-if="siteType.demoUrl !== '#'" type="button"
+                                    class="bg-transparent text-amber-400 hover:underline"
+                                    @click="openDemo(siteType.demoUrl)">demo</button>
+                                <span v-else class="text-neutral-600">—</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Other Technical Services -->
-            <div class="grid md:grid-cols-2 gap-6 text-neutral-300 text-sm">
-                <div class="bg-neutral-800 p-6 rounded-lg shadow hover:shadow-md transition">
-                    <h3 class="text-lg font-bold text-white mb-2">🖥️ Hosting on My Server</h3>
-                    <p>Optional monthly hosting on my secure VPS. Fast, optimized, and maintained.</p>
-                </div>
-                <div class="bg-neutral-800 p-6 rounded-lg shadow hover:shadow-md transition">
-                    <h3 class="text-lg font-bold text-white mb-2">️ Installation Help</h3>
-                    <p>I can assist with installing the site on your own hosting, or do it fully for you.</p>
-                </div>
-                <div class="bg-neutral-800 p-6 rounded-lg shadow hover:shadow-md transition">
-                    <h3 class="text-lg font-bold text-white mb-2"> Domain & DNS Setup</h3>
-                    <p>I'll help configure your domain, DNS records, and optional email redirection.</p>
-                </div>
-                <div class="bg-neutral-800 p-6 rounded-lg shadow hover:shadow-md transition">
-                    <h3 class="text-lg font-bold text-white mb-2"> Ongoing Support</h3>
-                    <p>Need minor edits or fixes later? I'm available for light support as needed.</p>
-                </div>
-                <div class="bg-neutral-800 p-6 rounded-lg shadow hover:shadow-md transition">
-                    <h3 class="text-lg font-bold text-white mb-2"> GitHub Delivery</h3>
-                    <p>Code is delivered via GitHub with clear instructions. You're in full control.</p>
-                </div>
-                <div class="bg-neutral-800 p-6 rounded-lg shadow hover:shadow-md transition">
-                    <h3 class="text-lg font-bold text-white mb-2"> Tech Consulting</h3>
-                    <p>Need feedback on your existing site or hosting setup? I'll review it and offer simple, actionable
-                        suggestions.</p>
+            <div class="mt-6 space-y-4 md:hidden">
+                <div v-for="siteType in siteTypes" :key="siteType.id"
+                    class="rounded-xl border border-neutral-700 bg-neutral-800 p-4">
+                    <div class="flex items-start justify-between gap-3">
+                        <h3 class="font-display font-semibold text-white">{{ siteType.name }}</h3>
+                        <button v-if="siteType.demoUrl !== '#'" type="button"
+                            class="inline-flex min-h-11 items-center text-sm text-amber-400"
+                            @click="openDemo(siteType.demoUrl)">demo</button>
+                    </div>
+                    <p class="mt-2 text-sm text-neutral-300">{{ siteType.description }}</p>
+                    <p class="mt-2 text-xs text-neutral-500">{{ siteType.bestFor }}</p>
+                    <p class="mt-3 text-sm font-semibold text-amber-400">{{ siteType.price }}</p>
                 </div>
             </div>
-        </div>
-    </section>
+            <p class="mt-6 text-sm text-neutral-500">{{ PRICE_NOTE }}</p>
+        </section>
 
-    <!-- Modal with form -->
-    <ProjectRequestModal :is-open="isModalOpen" @close="closeModal" />
+        <section id="web-systems" class="scroll-mt-28 border-t border-neutral-800 py-10 sm:scroll-mt-32 sm:py-14">
+            <h2 class="font-display text-2xl font-semibold text-amber-400">Web systems</h2>
+            <p class="mt-3 max-w-2xl text-neutral-300">{{ offers[1].owner }}</p>
+            <p class="mt-2 text-sm text-neutral-500">{{ offers[1].stack }}</p>
+            <p class="mt-6 font-semibold text-amber-400">{{ offers[1].price }} · by agreement</p>
+        </section>
+
+        <section id="mobile" class="scroll-mt-28 border-t border-neutral-800 py-10 sm:scroll-mt-32 sm:py-14">
+            <h2 class="font-display text-2xl font-semibold text-amber-400">Mobile</h2>
+            <div class="mt-8 grid gap-6 md:grid-cols-2">
+                <div class="rounded-xl border border-neutral-700 bg-neutral-800 p-6">
+                    <h3 class="font-display font-semibold text-white">Works on the phone</h3>
+                    <p class="mt-2 text-sm text-neutral-300">The site or system is comfortable on a small screen. Not a
+                        store listing.</p>
+                    <p class="mt-4 text-sm font-semibold text-amber-400">Included in the site or system</p>
+                </div>
+                <div class="rounded-xl border border-neutral-700 bg-neutral-800 p-6">
+                    <h3 class="font-display font-semibold text-white">Native app</h3>
+                    <p class="mt-2 text-sm text-neutral-300">A real Android and/or iOS app: install, notifications,
+                        camera, offline, store listing.</p>
+                    <p class="mt-4 text-sm font-semibold text-amber-400">from $5,000+ · by agreement</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="backend" class="scroll-mt-28 border-t border-neutral-800 py-10 sm:scroll-mt-32 sm:py-14">
+            <h2 class="font-display text-2xl font-semibold text-amber-400">Backend</h2>
+            <p class="mt-3 max-w-2xl text-neutral-300">{{ offers[3].owner }}</p>
+            <p class="mt-2 text-sm text-neutral-500">{{ offers[3].stack }}</p>
+            <p class="mt-6 font-semibold text-amber-400">{{ offers[3].price }} · by agreement</p>
+        </section>
+
+        <section id="automations" class="scroll-mt-28 border-t border-neutral-800 py-10 sm:scroll-mt-32 sm:py-14">
+            <h2 class="font-display text-2xl font-semibold text-amber-400">Automations</h2>
+            <p class="mt-3 max-w-2xl text-neutral-300">{{ offers[4].owner }}</p>
+            <p class="mt-2 text-sm text-neutral-500">{{ offers[4].stack }}</p>
+            <ul class="mt-6 space-y-2 text-sm text-neutral-300">
+                <li>A first flow (form to CRM or table to a message for you) — from $400+</li>
+                <li>Care: we watch the flows, fix breaks, small changes — from $30/mo+</li>
+            </ul>
+            <p class="mt-4 text-sm text-neutral-500">{{ PRICE_NOTE }}</p>
+        </section>
+
+        <section id="care" class="scroll-mt-28 border-t border-neutral-800 py-10 sm:scroll-mt-32 sm:py-14">
+            <h2 class="font-display text-2xl font-semibold text-amber-400">Care</h2>
+            <div class="mt-8 grid gap-6 md:grid-cols-2">
+                <div class="rounded-xl border border-neutral-700 bg-neutral-800 p-6">
+                    <h3 class="font-display font-semibold text-white">You own the files</h3>
+                    <p class="mt-2 text-sm text-neutral-300">Code is yours: GitHub or a zip, with notes on how it goes
+                        live.</p>
+                </div>
+                <div class="rounded-xl border border-neutral-700 bg-neutral-800 p-6">
+                    <h3 class="font-display font-semibold text-white">We can host it</h3>
+                    <p class="mt-2 text-sm text-neutral-300">Hosting and light support: updates, monitoring, small
+                        fixes. From $15/mo+ on top of the build, by agreement.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="border-t border-neutral-800 py-10 text-center sm:py-14">
+            <h2 class="font-display text-2xl font-semibold text-amber-400">Not sure which of these you need?</h2>
+            <p class="mx-auto mt-3 max-w-xl text-neutral-300">Describe the result. We will map it to a site, a system,
+                an app, or an automation — or a mix — and agree the price before work starts.</p>
+            <button type="button" class="btn-primary mt-8 w-full sm:w-auto" @click="openModal">Get a quote</button>
+        </section>
+    </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import ProjectRequestModal from '../components/ProjectRequestModal.vue'
+import { onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useProjectModal } from '../composables/useProjectModal'
 import { useSEO } from '../composables/useSEO'
+import { PRICE_NOTE, offers, siteTypes } from '../content/offers'
 
-const { isModalOpen, openModal, closeModal } = useProjectModal()
+const route = useRoute()
+const { openModal } = useProjectModal()
 
-// SEO configuration for this page
-const { updateMetaTags } = useSEO({
-    title: 'Website Development Services & Pricing - WebSmith Shop',
-    description: 'Professional website development services including landing pages, corporate sites, portfolios, e-commerce, and custom solutions. Transparent pricing from $200 to $2500+.',
-    keywords: 'website development, web design, landing pages, corporate websites, portfolio sites, e-commerce, custom web development, web development pricing, Vue.js development',
-    ogTitle: 'Website Development Services & Pricing - WebSmith Shop',
-    ogDescription: 'Professional website development services including landing pages, corporate sites, portfolios, e-commerce, and custom solutions. Transparent pricing from $200 to $2500+.',
-    ogImage: '/src/assets/site-images/hero.png',
-    canonical: 'https://websmith-shop.com/services'
+useSEO({
+    title: 'Services and pricing — WebSmith',
+    description:
+        'Landing pages from $200+. Company sites, shops, web systems, native apps, and automations. Price by agreement.',
+    ogTitle: 'Services and pricing — WebSmith',
+    ogDescription:
+        'Landing pages from $200+. Company sites, shops, web systems, native apps, and automations. Price by agreement.',
+    canonical: 'https://websmith-shop.com/services',
 })
 
-// Update SEO on component mount
-onMounted(() => {
-    updateMetaTags({
-        title: 'Website Development Services & Pricing - WebSmith Shop',
-        description: 'Professional website development services including landing pages, corporate sites, portfolios, e-commerce, and custom solutions. Transparent pricing from $200 to $2500+.',
-        keywords: 'website development, web design, landing pages, corporate websites, portfolio sites, e-commerce, custom web development, web development pricing, Vue.js development',
-        ogTitle: 'Website Development Services & Pricing - WebSmith Shop',
-        ogDescription: 'Professional website development services including landing pages, corporate sites, portfolios, e-commerce, and custom solutions. Transparent pricing from $200 to $2500+.',
-        ogImage: '/src/assets/site-images/hero.png',
-        canonical: 'https://websmith-shop.com/services'
-    })
-})
+function scrollToHash() {
+    if (!route.hash) {
+        return
+    }
+    const target = document.querySelector(route.hash)
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+}
 
-// Function to open demo links with proper mobile handling
+onMounted(scrollToHash)
+watch(() => route.hash, scrollToHash)
+
 function openDemo(url: string) {
-    // Check if we're on mobile device
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-
     if (isMobile) {
-        // On mobile, try to open in new tab first, fallback to current window
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
         if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
             window.location.href = url
         }
     } else {
-        // On desktop, always open in new tab
         window.open(url, '_blank', 'noopener,noreferrer')
     }
 }
-
-const siteTypes = [
-    {
-        id: 'landing',
-        name: 'Landing Page',
-        description: 'Single-page website focused on one service/product or event. Sales copy, bright design, call-to-action.',
-        bestFor: 'Product launches, promotions, events, quick online presence',
-        devPrice: '$200–500',
-        demoUrl: 'https://demo6.websmith-shop.com'
-    },
-    {
-        id: 'corporate',
-        name: 'Corporate Services Website',
-        description: '3–5 pages: home, services/products, about, contacts, reviews. More informative than landing.',
-        bestFor: 'Service companies, small businesses, brands',
-        devPrice: '$600–1200',
-        demoUrl: 'https://demo2.websmith-shop.com'
-    },
-    {
-        id: 'portfolio',
-        name: 'Portfolio / Personal Page',
-        description: 'Showcase of works with project descriptions, photos/videos and contacts.',
-        bestFor: 'Designers, photographers, architects, freelancers',
-        devPrice: '$300–700',
-        demoUrl: 'https://demo5.websmith-shop.com'
-    },
-    {
-        id: 'ecommerce',
-        name: 'E-commerce Storefront',
-        description: 'Basic e-commerce package with catalog (up to 20 products) and online payment. Admin panel for product management.',
-        bestFor: 'Stores with small to medium product range, basic e-commerce',
-        devPrice: '$1000–2500',
-        demoUrl: 'https://demo3.websmith-shop.com'
-    },
-    {
-        id: 'blog',
-        name: 'Blog / Content Site',
-        description: 'Content management system with admin panel. From simple blog with categories to full news portal with API integration, external sources, and author management.',
-        bestFor: 'Writers, journalists, content creators, news agencies, media companies',
-        devPrice: '$1000–2500',
-        demoUrl: 'https://demo1.websmith-shop.com'
-    },
-    {
-        id: 'event',
-        name: 'Event Campaign Site',
-        description: 'Minimal page for specific event or offer.',
-        bestFor: 'Promotion of a single product, service, or campaign',
-        devPrice: '$200–400',
-        demoUrl: 'https://demo4.websmith-shop.com'
-    },
-    {
-        id: 'migration',
-        name: 'Website Migration',
-        description: 'Migrate from WordPress, Joomla, or Drupal to modern Astro/Vue.js. Faster, cheaper hosting, zero maintenance.',
-        bestFor: 'Businesses with old CMS sites, cost optimization, performance improvement',
-        devPrice: '$800–2000',
-        demoUrl: '#'
-    },
-    {
-        id: 'custom',
-        name: 'Custom',
-        description: 'Individual project with unique requirements and functionality. Discussed and priced individually.',
-        bestFor: 'Complex projects, unique business needs, custom integrations',
-        devPrice: '$2000+',
-        demoUrl: '#'
-    }
-]
 </script>
-
-<style scoped>
-.amber-filter {
-    filter: sepia(1) hue-rotate(15deg) saturate(2.5) brightness(1.2);
-}
-</style>

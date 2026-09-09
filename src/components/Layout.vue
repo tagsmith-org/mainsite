@@ -1,119 +1,137 @@
 <template>
-    <div class="min-h-screen bg-neutral-900 text-white font-sans">
+    <div class="min-h-dvh overflow-x-hidden bg-neutral-800 font-sans text-white">
+        <a href="#main-content"
+            class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-amber-500 focus:px-4 focus:py-2 focus:text-neutral-900">
+            Skip to content
+        </a>
         <PromoBanner />
 
-        <!-- Header -->
-        <header class="px-6 py-4 shadow-md bg-neutral-800">
-            <nav class="max-w-4xl mx-auto flex justify-between items-center relative">
-                <!-- Logo and title -->
-                <div class="flex items-center min-w-0">
-                    <img src="../../src/assets/logos/image.png" class="h-10 w-auto flex-shrink-0 amber-filter" />
-                    <h1 class="text-xl font-bold tracking-wide ml-2 truncate">
+        <header
+            class="sticky top-0 z-40 border-b border-neutral-800 bg-neutral-800/95 pt-[env(safe-area-inset-top)] backdrop-blur-sm">
+            <nav class="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
+                <RouterLink to="/" class="flex min-h-11 min-w-0 items-center" aria-label="WebSmith home">
+                    <img src="../../src/assets/logos/image.png" alt=""
+                        class="h-9 w-auto flex-shrink-0 amber-filter sm:h-10" />
+                    <span class="ml-2 truncate font-display text-lg font-semibold tracking-wide sm:text-xl">
                         WebSmith
-                    </h1>
-                </div>
+                    </span>
+                </RouterLink>
 
-                <!-- Desktop menu -->
-                <ul class="hidden md:flex space-x-6 text-sm uppercase">
+                <ul class="hidden items-center gap-6 text-sm font-medium text-neutral-300 lg:flex lg:gap-8">
                     <li>
-                        <RouterLink to="/" class="hover:text-amber-400">Home</RouterLink>
+                        <RouterLink to="/" class="nav-link" exact-active-class="nav-link-active">Home</RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="/what-we-do" class="hover:text-amber-400">What We Do</RouterLink>
+                        <RouterLink to="/services" class="nav-link" active-class="nav-link-active">Services</RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="/services" class="hover:text-amber-400">Services</RouterLink>
+                        <RouterLink to="/work" class="nav-link" active-class="nav-link-active">Work</RouterLink>
                     </li>
-                    <!--
                     <li>
-                        <RouterLink to="/portfolio" class="hover:text-amber-400">Portfolio</RouterLink>
+                        <RouterLink to="/contact" class="nav-link" active-class="nav-link-active">Contact</RouterLink>
                     </li>
-                    -->
                     <li>
-                        <RouterLink to="/contact" class="hover:text-amber-400">Contact</RouterLink>
+                        <button type="button" class="btn-primary py-2 text-xs uppercase tracking-wide"
+                            @click="openModal">
+                            Get a quote
+                        </button>
                     </li>
                 </ul>
 
-                <!-- Burger icon (mobile only) -->
-                <button class="md:hidden flex flex-col justify-center items-center w-10 h-10" @click="isOpen = !isOpen"
-                    aria-label="Open menu">
-                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
-                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
-                    <span class="block w-6 h-0.5 bg-white"></span>
+                <button type="button"
+                    class="relative flex h-11 w-11 flex-col items-center justify-center lg:hidden"
+                    :aria-expanded="isOpen" :aria-label="isOpen ? 'Close menu' : 'Open menu'"
+                    @click="isOpen = !isOpen">
+                    <span class="block h-0.5 w-6 bg-white transition-transform duration-200"
+                        :class="isOpen ? 'translate-y-2 rotate-45' : ''"></span>
+                    <span class="mt-1.5 block h-0.5 w-6 bg-white transition-opacity duration-200"
+                        :class="isOpen ? 'opacity-0' : ''"></span>
+                    <span class="mt-1.5 block h-0.5 w-6 bg-white transition-transform duration-200"
+                        :class="isOpen ? '-translate-y-2 -rotate-45' : ''"></span>
                 </button>
 
-                <!-- Mobile menu -->
-                <transition name="fade">
-                    <ul v-if="isOpen"
-                        class="absolute top-full right-0 w-full bg-neutral-900 flex flex-col items-center py-4 space-y-4 z-50 md:hidden shadow-lg">
-                        <li>
-                            <RouterLink to="/" class="hover:text-amber-400" @click="isOpen = false">Home</RouterLink>
-                        </li>
-                        <li>
-                            <RouterLink to="/what-we-do" class="hover:text-amber-400" @click="isOpen = false">What We Do
-                            </RouterLink>
-                        </li>
-                        <li>
-                            <RouterLink to="/services" class="hover:text-amber-400" @click="isOpen = false">Services
-                            </RouterLink>
-                        </li>
-                        <!--
-                        <li>
-                            <RouterLink to="/portfolio" class="hover:text-amber-400" @click="isOpen = false">Portfolio
-                            </RouterLink>
-                        </li>
-                        -->
-                        <li>
-                            <RouterLink to="/contact" class="hover:text-amber-400" @click="isOpen = false">Contact
-                            </RouterLink>
-                        </li>
-                    </ul>
-                </transition>
+                <ul v-if="isOpen"
+                    class="absolute left-0 right-0 top-full z-50 flex max-h-[calc(100dvh-4rem)] flex-col items-stretch overflow-y-auto border-b border-neutral-800 bg-neutral-900 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:hidden">
+                    <li>
+                        <RouterLink to="/" class="nav-link flex min-h-11 items-center" @click="isOpen = false">Home
+                        </RouterLink>
+                    </li>
+                    <li>
+                        <RouterLink to="/services" class="nav-link flex min-h-11 items-center"
+                            @click="isOpen = false">Services</RouterLink>
+                    </li>
+                    <li>
+                        <RouterLink to="/work" class="nav-link flex min-h-11 items-center" @click="isOpen = false">Work
+                        </RouterLink>
+                    </li>
+                    <li>
+                        <RouterLink to="/contact" class="nav-link flex min-h-11 items-center"
+                            @click="isOpen = false">Contact</RouterLink>
+                    </li>
+                    <li class="pt-2">
+                        <button type="button" class="btn-primary w-full" @click="openQuoteFromMobile">Get a quote</button>
+                    </li>
+                </ul>
             </nav>
         </header>
 
-        <!-- Main Content -->
-        <main class="max-w-4xl mx-auto px-6 py-10">
+        <main id="main-content">
             <slot />
         </main>
 
-        <!-- Footer -->
-        <footer class="text-center text-xs text-neutral-400 py-4 border-t border-neutral-700">
-            <div class="mb-2">
-                © 2025 WebSmith. Crafted with Vue & Tailwind.
+        <footer
+            class="border-t border-neutral-800 px-4 py-8 pb-[max(2rem,env(safe-area-inset-bottom))] text-center text-xs text-neutral-400 sm:px-6">
+            <div class="mb-3 font-medium text-neutral-300">
+                WebSmith — sites, systems, apps, automations.
             </div>
-            <div class="space-x-4">
-                <RouterLink to="/privacy-policy" class="hover:text-amber-400 transition-colors">
-                    Privacy Policy
-                </RouterLink>
-                <span class="text-neutral-500">|</span>
-                <RouterLink to="/terms" class="hover:text-amber-400 transition-colors">
-                    Terms of Use
-                </RouterLink>
-                <span class="text-neutral-500">|</span>
-                <RouterLink to="/cookies" class="hover:text-amber-400 transition-colors">
-                    Cookie Policy
-                </RouterLink>
+            <div class="mb-3">© 2026 WebSmith</div>
+            <div class="flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
+                <RouterLink to="/privacy-policy" class="inline-flex min-h-11 items-center hover:text-amber-400">Privacy
+                    Policy</RouterLink>
+                <RouterLink to="/terms" class="inline-flex min-h-11 items-center hover:text-amber-400">Terms of
+                    Use</RouterLink>
+                <RouterLink to="/cookies" class="inline-flex min-h-11 items-center hover:text-amber-400">Cookie
+                    Policy</RouterLink>
             </div>
         </footer>
 
-        <!-- Promo Manager (only in development) -->
         <PromoManager />
+        <ProjectRequestModal :is-open="isModalOpen" @close="closeModal" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { onUnmounted, ref, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 import PromoBanner from './PromoBanner.vue'
 import PromoManager from './PromoManager.vue'
+import ProjectRequestModal from './ProjectRequestModal.vue'
+import { useProjectModal } from '../composables/useProjectModal'
 
 const isOpen = ref(false)
+const route = useRoute()
+const { isModalOpen, openModal, closeModal } = useProjectModal()
+
+watch(() => route.fullPath, () => {
+    isOpen.value = false
+})
+
+watch([isOpen, isModalOpen], ([menuOpen, modalOpen]) => {
+    document.body.style.overflow = menuOpen || modalOpen ? 'hidden' : ''
+})
+
+onUnmounted(() => {
+    document.body.style.overflow = ''
+})
+
+function openQuoteFromMobile() {
+    isOpen.value = false
+    openModal()
+}
 </script>
+
 <style scoped>
 .amber-filter {
     filter: brightness(0) saturate(100%) invert(84%) sepia(31%) saturate(638%) hue-rotate(359deg) brightness(103%) contrast(107%);
-
-
 }
 </style>

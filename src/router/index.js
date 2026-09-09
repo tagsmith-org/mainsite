@@ -4,10 +4,11 @@ import Home from '../views/Home.vue'
 import Services from '../views/Services.vue'
 import Portfolio from '../views/Portfolio.vue'
 import Contact from '../views/Contact.vue'
-import WhatWeDo from '../views/WhatWeDo.vue'
 import PrivacyPolicy from '../views/PrivacyPolicy.vue'
 import Terms from '../views/Terms.vue'
 import Cookies from '../views/Cookies.vue'
+import Unsubscribe from '../views/Unsubscribe.vue'
+import NotFound from '../views/NotFound.vue'
 import { useGoogleAnalytics } from '../composables/useGoogleAnalytics'
 
 const routes = [
@@ -15,52 +16,55 @@ const routes = [
     path: '/', 
     component: Home,
     meta: {
-      title: 'WebSmith Shop - Modern Web Development with Astro & Vue.js',
-      description: 'Professional web development using modern technologies (Astro, Vue.js) for lightning-fast websites. Free hosting options, 70-100% cost savings vs WordPress. Custom landing pages, corporate sites, and web applications.',
-      keywords: 'modern web development, Astro framework, Vue.js development, fast websites, free hosting, Netlify, Vercel, Cloudflare, WordPress alternative, static site generation, JAMstack, web performance, cost-effective web development, landing pages, corporate websites, custom web applications',
-      ogTitle: 'WebSmith Shop - Modern Web Development with Astro & Vue.js',
-      ogDescription: 'Professional web development using modern technologies (Astro, Vue.js) for lightning-fast websites. Free hosting options, 70-100% cost savings vs WordPress. Custom landing pages, corporate sites, and web applications.',
-      ogImage: '/src/assets/site-images/hero.png',
+      title: 'WebSmith — sites, systems, apps, and automations',
+      description: 'Custom websites, web systems, Android and iOS apps, backend, and business automations. Starting prices, then by agreement.',
+      ogTitle: 'WebSmith — sites, systems, apps, and automations',
+      ogDescription: 'Custom websites, web systems, Android and iOS apps, backend, and business automations. Starting prices, then by agreement.',
+      ogImage: '/favicon_32x32.png',
       canonical: 'https://websmith-shop.com/'
     }
   },
-  { 
-    path: '/what-we-do', 
-    component: WhatWeDo,
-    meta: {
-      title: 'Modern Web Development: Astro, Vue.js & Free Hosting - WebSmith Shop',
-      description: 'Discover how modern web technologies (Astro, Vue.js) beat WordPress with lightning-fast performance, free hosting (Netlify, Vercel, Cloudflare), and 70-100% cost savings. Seamless scaling from static sites to complex applications.',
-      keywords: 'Astro framework, Vue.js development, modern web technologies, WordPress alternative, free hosting, Netlify, Vercel, Cloudflare, static site generation, JAMstack, web performance, cost-effective web development, website migration, WordPress to Astro, modern vs traditional web development',
-      ogTitle: 'Modern Web Development: Astro, Vue.js & Free Hosting - WebSmith Shop',
-      ogDescription: 'Discover how modern web technologies (Astro, Vue.js) beat WordPress with lightning-fast performance, free hosting (Netlify, Vercel, Cloudflare), and 70-100% cost savings. Seamless scaling from static sites to complex applications.',
-      ogImage: '/src/assets/site-images/hero.png',
-      canonical: 'https://websmith-shop.com/what-we-do'
-    }
+  {
+    path: '/what-we-do',
+    redirect: '/services',
   },
   { 
     path: '/services', 
     component: Services,
     meta: {
-      title: 'Website Development & Migration Services - WebSmith Shop',
-      description: 'Professional website development services with modern technologies (Astro, Vue.js). Website migration from WordPress/Joomla/Drupal to modern stack. Transparent pricing from $200 to $2500+. Free hosting options available.',
-      keywords: 'website development, website migration, WordPress to Astro, Joomla migration, Drupal migration, modern web development, Astro development, Vue.js development, free hosting, Netlify, Vercel, Cloudflare, web design, landing pages, corporate websites, portfolio sites, e-commerce, custom web development, web development pricing, cost-effective web solutions',
-      ogTitle: 'Website Development & Migration Services - WebSmith Shop',
-      ogDescription: 'Professional website development services with modern technologies (Astro, Vue.js). Website migration from WordPress/Joomla/Drupal to modern stack. Transparent pricing from $200 to $2500+. Free hosting options available.',
-      ogImage: '/src/assets/site-images/hero.png',
+      title: 'Services and pricing — WebSmith',
+      description: 'Landing pages from $200+. Company sites, shops, web systems, native apps, and automations. Price by agreement.',
+      ogTitle: 'Services and pricing — WebSmith',
+      ogDescription: 'Landing pages from $200+. Company sites, shops, web systems, native apps, and automations. Price by agreement.',
+      ogImage: '/favicon_32x32.png',
       canonical: 'https://websmith-shop.com/services'
     }
   },
-  //{ path: '/portfolio', component: Portfolio },
+  {
+    path: '/work',
+    component: Portfolio,
+    meta: {
+      title: 'Work — WebSmith',
+      description: 'Live Pet Friends system, a contractor jobsite cabinet, lead outreach and site checks, plus demo sites.',
+      ogTitle: 'Work — WebSmith',
+      ogDescription: 'Live Pet Friends system, a contractor jobsite cabinet, lead outreach and site checks, plus demo sites.',
+      ogImage: '/favicon_32x32.png',
+      canonical: 'https://websmith-shop.com/work',
+    },
+  },
+  {
+    path: '/portfolio',
+    redirect: '/work',
+  },
   { 
     path: '/contact', 
     component: Contact,
     meta: {
-      title: 'Contact WebSmith Shop - Modern Web Development & Migration Services',
-      description: 'Ready to modernize your web presence? Contact WebSmith Shop for Astro/Vue.js development, WordPress migration, and cost-effective web solutions. Free consultation and transparent pricing.',
-      keywords: 'contact web developer, website migration consultation, Astro development quote, Vue.js development, WordPress to Astro migration, modern web development contact, free web development consultation, website redesign quote',
-      ogTitle: 'Contact WebSmith Shop - Modern Web Development & Migration Services',
-      ogDescription: 'Ready to modernize your web presence? Contact WebSmith Shop for Astro/Vue.js development, WordPress migration, and cost-effective web solutions. Free consultation and transparent pricing.',
-      ogImage: '/src/assets/site-images/hero.png',
+      title: 'Get a quote — WebSmith',
+      description: 'Tell us what you need: a site, a system, an app, or an automation. Reply within 24–48 hours.',
+      ogTitle: 'Get a quote — WebSmith',
+      ogDescription: 'Tell us what you need: a site, a system, an app, or an automation. Reply within 24–48 hours.',
+      ogImage: '/favicon_32x32.png',
       canonical: 'https://websmith-shop.com/contact'
     }
   },
@@ -73,7 +77,7 @@ const routes = [
       keywords: 'privacy policy, data protection, personal data, cookies, GDPR, privacy rights, data collection, website privacy',
       ogTitle: 'Privacy Policy - WebSmith Shop',
       ogDescription: 'Privacy Policy for WebSmith Shop. Learn how we collect, use, and protect your personal data when you interact with our website.',
-      ogImage: '/src/assets/site-images/hero.png',
+      ogImage: '/favicon_32x32.png',
       canonical: 'https://websmith-shop.com/privacy-policy'
     }
   },
@@ -86,7 +90,7 @@ const routes = [
       keywords: 'terms of use, website terms, intellectual property, liability, service terms, web development terms, legal terms',
       ogTitle: 'Terms of Use - WebSmith Shop',
       ogDescription: 'Terms of Use for WebSmith Shop. Learn about acceptable use, intellectual property rights, and service terms for our web development services.',
-      ogImage: '/src/assets/site-images/hero.png',
+      ogImage: '/favicon_32x32.png',
       canonical: 'https://websmith-shop.com/terms'
     }
   },
@@ -99,15 +103,47 @@ const routes = [
       keywords: 'cookie policy, cookies, website cookies, browser cookies, cookie management, privacy cookies, analytics cookies',
       ogTitle: 'Cookie Policy - WebSmith Shop',
       ogDescription: 'Cookie Policy for WebSmith Shop. Learn about how we use cookies to improve your browsing experience and website functionality.',
-      ogImage: '/src/assets/site-images/hero.png',
+      ogImage: '/favicon_32x32.png',
       canonical: 'https://websmith-shop.com/cookies'
     }
+  },
+  {
+    path: '/unsubscribe',
+    component: Unsubscribe,
+    meta: {
+      title: 'Unsubscribe - WebSmith Shop',
+      description: 'Unsubscribe from WebSmith outreach messages.',
+      canonical: 'https://websmith-shop.com/unsubscribe'
+    }
+  },
+  {
+    path: '/404',
+    component: NotFound,
+    meta: {
+      title: 'Page not found — WebSmith',
+      description: 'This page does not exist. Open home, services, or work instead.',
+      canonical: 'https://websmith-shop.com/404',
+    },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: NotFound,
+    meta: {
+      title: 'Page not found — WebSmith',
+      description: 'This page does not exist. Open home, services, or work instead.',
+    },
   },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior(to) {
+    if (to.hash) {
+      return { el: to.hash, top: 96, behavior: 'smooth' }
+    }
+    return { top: 0 }
+  },
 })
 
 // Global navigation guard to update meta tags and track analytics
@@ -164,6 +200,9 @@ router.beforeEach((to, from, next) => {
 
 // Track page views after navigation
 router.afterEach((to) => {
+  if (window.__PRERENDER__) {
+    return
+  }
   const { trackPageView } = useGoogleAnalytics()
   trackPageView(to.meta?.title || document.title)
 })

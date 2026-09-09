@@ -90,16 +90,16 @@
                 </div>
             </div>
 
-            <!-- Website Requirements -->
+            <!-- Project requirements -->
             <div>
                 <label for="requirements" class="block text-sm font-medium text-neutral-200 mb-2">
-                    Website Requirements *
+                    Project requirements *
                 </label>
                 <textarea id="requirements" v-model="formData.requirements" required rows="4"
                     @blur="validateField('requirements')" @input="clearFieldError('requirements')" :class="[
                         'w-full px-4 py-3 bg-neutral-800 border rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none transition-colors',
                         fieldErrors.requirements ? 'border-red-500' : 'border-neutral-700'
-                    ]" placeholder="Describe what the website should do, what functions are needed"></textarea>
+                    ]" placeholder="What should the result look like — a site, a system, an app, or an automation?"></textarea>
                 <div v-if="fieldErrors.requirements" class="mt-1 text-sm text-red-400 flex items-center">
                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -116,10 +116,10 @@
             <!-- Content -->
             <div>
                 <label class="block text-sm font-medium text-neutral-200 mb-3">
-                    Website Content *
+                    Project content *
                 </label>
-                <div class="space-y-3">
-                    <label class="flex items-center">
+                <div class="space-y-2">
+                    <label class="flex min-h-11 items-center">
                         <input v-model="formData.contentType" type="radio" value="no-content"
                             @change="clearFieldError('contentType')" class="mr-3 text-amber-500 focus:ring-amber-500" />
                         <span class="text-neutral-300">
@@ -127,7 +127,7 @@
                         </span>
                     </label>
 
-                    <label class="flex items-center">
+                    <label class="flex min-h-11 items-center">
                         <input v-model="formData.contentType" type="radio" value="with-content"
                             @change="clearFieldError('contentType')" class="mr-3 text-amber-500 focus:ring-amber-500" />
                         <span class="text-neutral-300">
@@ -135,7 +135,7 @@
                         </span>
                     </label>
 
-                    <label class="flex items-center">
+                    <label class="flex min-h-11 items-center">
                         <input v-model="formData.contentType" type="radio" value="need-content"
                             @change="clearFieldError('contentType')" class="mr-3 text-amber-500 focus:ring-amber-500" />
                         <span class="text-neutral-300">
@@ -156,7 +156,7 @@
             <!-- Submit Button -->
             <button type="submit" :disabled="isSubmitting || hasErrors"
                 @click="trackButtonClick('submit_project_request')"
-                class="w-full bg-amber-500 text-neutral-900 px-6 py-3 rounded-lg font-semibold hover:bg-amber-400 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                class="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50">
                 <span v-if="isSubmitting">Sending...</span>
                 <span v-else-if="hasErrors">Please fix errors above</span>
                 <span v-else>Submit Request</span>
@@ -165,10 +165,11 @@
 
         <!-- Toast notifications -->
         <div v-if="toast.show" :class="toast.type === 'success' ? 'bg-green-600' : 'bg-red-600'"
-            class="fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg text-white max-w-sm transition-all duration-300">
+            class="fixed bottom-4 left-4 right-4 z-[60] rounded-lg p-4 text-white shadow-lg transition-all duration-300 sm:bottom-auto sm:left-auto sm:right-4 sm:top-20 sm:max-w-sm">
             <div class="flex items-center">
                 <span class="flex-1">{{ toast.message }}</span>
-                <button @click="hideToast" class="ml-3 text-white hover:text-gray-200">
+                <button type="button" class="ml-3 inline-flex h-11 w-11 items-center justify-center text-white"
+                    aria-label="Dismiss" @click="hideToast">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
                             d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -285,7 +286,7 @@ function validateField(fieldName: keyof FormData) {
 
         case 'requirements':
             if (!value) {
-                fieldErrors.value.requirements = 'Website requirements are required'
+                fieldErrors.value.requirements = 'Project requirements are required'
             } else if (value.length < 5) {
                 fieldErrors.value.requirements = 'Requirements must be at least 5 characters long'
             } else if (value.length > 5000) {

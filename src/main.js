@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, nextTick } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
@@ -17,17 +17,26 @@ const { addOrganizationSchema, addWebSiteSchema } = useStructuredData()
 
 // Initialize Google Analytics
 const { initialize: initializeAnalytics, trackPageView } = useGoogleAnalytics()
-initializeAnalytics({
-  measurementId: analyticsConfig.measurementId,
-  debugMode: analyticsConfig.debugMode
-})
+if (!window.__PRERENDER__) {
+  initializeAnalytics({
+    measurementId: analyticsConfig.measurementId,
+    debugMode: analyticsConfig.debugMode,
+  })
+}
 
 // Add global structured data
 addOrganizationSchema()
 addWebSiteSchema()
 
-// Track initial page view
-trackPageView()
+if (!window.__PRERENDER__) {
+  trackPageView()
+}
 
 app.mount('#app')
+
+router.isReady().then(async () => {
+  await nextTick()
+  document.documentElement.dataset.prerenderReady = '1'
+  document.dispatchEvent(new Event('app-rendered'))
+})
 

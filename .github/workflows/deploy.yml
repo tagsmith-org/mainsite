@@ -13,25 +13,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Chromium libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            fonts-liberation libasound2t64 libatk-bridge2.0-0 libatk1.0-0 \
+            libcups2 libdrm2 libgbm1 libgtk-3-0 libnss3 libxcomposite1 \
+            libxdamage1 libxfixes3 libxkbcommon0 libxrandr2 xdg-utils
+
       - name: Install dependencies
         run: npm ci
 
       - name: Create .env file for build
         run: |
-          echo "🔧 Creating .env file for build..."
+          echo "Creating .env file for build..."
           cat > .env << 'EOF'
           VITE_API_URL=https://websmith-shop.com
           VITE_ADMIN_EMAIL=tagsmith.web@gmail.com
           VITE_ADMIN_IPS=127.0.0.1,::1,192.168.1.1,66.130.107.35
           VITE_PROMO_ENABLED=true
           VITE_PROMO_DISCOUNT=50
-          VITE_PROMO_LABEL="🔥 50% FIRST ORDERS DISCOUNT"
+          VITE_PROMO_LABEL="50% FIRST ORDERS DISCOUNT"
           VITE_PROMO_DESCRIPTION="Get 50% off on your first 3 orders!"
           VITE_PROMO_START_DATE=2025-07-21
           VITE_PROMO_END_DATE=2025-08-01
           VITE_PROMO_MANAGER=true
           EOF
-          echo "✅ .env file created for build"
+          echo ".env file created for build"
 
       - name: Build project
         run: npm run build
@@ -68,17 +82,36 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            echo "🔧 Moving files to correct location..."
+            echo "Moving files to correct location..."
             cd /var/www/mainsite
             mv dist/* .
             rmdir dist
-            echo "🔧 Files moved successfully"
-            
-            # Set correct permissions
-            chown -R www-data:www-data /var/www/mainsite/
+            echo "Files moved successfully"
             chmod -R 755 /var/www/mainsite/
-            
-            # Restart nginx
-            echo "🔄 Restarting nginx..."
-            sudo systemctl restart nginx
-            echo "🎉 Deployment completed successfully!"
+
+            if [ -f /etc/caddy/Caddyfile ]; then
+              cp /etc/caddy/Caddyfile /etc/caddy/Caddyfile.bak.seo || true
+              python3 -c "from pathlib import Path; p=Path('/etc/caddy/Caddyfile'); t=p.read_text(); n=t.replace('try_files {path} /index.html','try_files {path} {path}/index.html').replace('try_files {path} {path}/ /index.html','try_files {path} {path}/index.html');
+print('Caddyfile changed' if n!=t else 'Caddyfile unchanged');
+p.write_text(n) if n!=t else None; print(p.read_text()[:2000])"
+            fi
+
+            if systemctl is-active --quiet caddy; then
+              echo "Reloading Caddy..."
+              systemctl reload caddy || caddy reload
+            elif systemctl is-active --quiet nginx; then
+              echo "Restarting nginx..."
+              systemctl restart nginx
+            fi
+            echo "Deployment completed successfully!"
+
+      - name: Verify live prerender
+        run: |
+          sleep 5
+          home=$(curl -fsS https://websmith-shop.com/)
+          echo "$home" | grep -q "Sites, systems, and apps that do the work"
+          work=$(curl -fsS https://websmith-shop.com/work)
+          echo "$work" | grep -q "Jobsite cabinet"
+          code=$(curl -sS -o /dev/null -w "%{http_code}" https://websmith-shop.com/this-page-does-not-exist-ws)
+          echo "missing URL status: $code"
+          test "$code" != "200"
